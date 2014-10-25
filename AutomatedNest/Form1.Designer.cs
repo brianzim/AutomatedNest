@@ -44,7 +44,7 @@
             this.button1.Location = new System.Drawing.Point(12, 219);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(142, 76);
-            this.button1.TabIndex = 0;
+            this.button1.TabIndex = 4;
             this.button1.Text = "Login";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -68,7 +68,7 @@
             this.button2.Location = new System.Drawing.Point(226, 217);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(146, 80);
-            this.button2.TabIndex = 3;
+            this.button2.TabIndex = 5;
             this.button2.Text = "Get Weather";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -105,14 +105,14 @@
             this.txtZip.Location = new System.Drawing.Point(142, 130);
             this.txtZip.Name = "txtZip";
             this.txtZip.Size = new System.Drawing.Size(100, 20);
-            this.txtZip.TabIndex = 7;
+            this.txtZip.TabIndex = 3;
             // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(438, 217);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(148, 78);
-            this.button3.TabIndex = 8;
+            this.button3.TabIndex = 6;
             this.button3.Text = "Get Nest Status";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
