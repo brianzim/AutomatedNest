@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
+using AutomatedNest.ThermostatManager;
 
 namespace AutomatedNest
 {
@@ -30,6 +31,7 @@ namespace AutomatedNest
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             HttpWebRequest request = WebRequest.Create(login_url) as HttpWebRequest;
             request.Method = "POST";
             request.UserAgent = "'Nest/2.1.3 CFNetwork/548.0.4'";
@@ -57,7 +59,9 @@ namespace AutomatedNest
             dynamic jo = JObject.Parse(responseBody);
 
             nc = new NestCredentials(jo.urls.transport_url.ToString(), jo.access_token.ToString(), jo.user.ToString(), jo.userid.ToString(), jo.expires_in.ToString());
+            
 
+           
             
         }
 
