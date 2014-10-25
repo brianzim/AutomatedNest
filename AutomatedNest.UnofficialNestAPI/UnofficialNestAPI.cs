@@ -72,6 +72,31 @@ namespace AutomatedNest.UnofficialNestAPI
             return new NestForecast(responseBody);
         }
 
+        public static NestStatus getNestStatus(NestCredentials credentials)
+        {
+            string url = credentials.TransportURL + "/v2/mobile/" + credentials.User;
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            request.Method = "GET";
+            request.UserAgent = userAgent;
+            request.Headers.Add("X-nl-protocol-version", protocol_version);
+            request.Headers.Add("X-nl-user-d", credentials.UserID);
+            string auth = "Basic " + credentials.AccessToken;
+            request.Headers.Set("Authorization", auth);
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            string responseBody;
+
+            using (Stream stream = response.GetResponseStream())
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    responseBody = reader.ReadToEnd();
+                }
+            }
+
+            return new NestStatus(responseBody);
+        }
+
         public static string getAPI(string url) { return null;  }
 
         private static string WriteEncodedFormParameter(string key, string value)
@@ -81,7 +106,6 @@ namespace AutomatedNest.UnofficialNestAPI
 
         private static string WriteEncodedFormParameter(string key, string value, bool isUrl)
         {
-
             var encoded = string.Format("{0}={1}", Uri.EscapeUriString(key), Uri.EscapeUriString(value));
             return (isUrl ? encoded.Replace("%20", "+") : encoded);
         }

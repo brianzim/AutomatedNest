@@ -16,9 +16,9 @@ namespace AutomatedNest.ThermostatManager
   
         }
 
-        public static void getStatus(NestCredentials credentials)
+        public static NestStatus getStatus(NestCredentials credentials)
         {
-
+            return UnofficialNestAPI.UnofficialNestAPI.getNestStatus(credentials);
         }
 
     }
