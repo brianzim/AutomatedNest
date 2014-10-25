@@ -47,6 +47,10 @@
       <Project>{8a8005d9-24e3-4907-bdd9-66836abc7ee4}</Project>
       <Name>AutomatedNest.NestDataObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutomatedNest.ThermostatEngines\AutomatedNest.ThermostatEngines.csproj">
+      <Project>{6b032fcf-8fa2-4016-a5d9-b3b5e08470ca}</Project>
+      <Name>AutomatedNest.ThermostatEngines</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutomatedNest.UnofficialNestAPI\AutomatedNest.UnofficialNestAPI.csproj">
       <Project>{683ab04a-205b-4ffc-9d4f-731273310eb8}</Project>
       <Name>AutomatedNest.UnofficialNestAPI</Name>

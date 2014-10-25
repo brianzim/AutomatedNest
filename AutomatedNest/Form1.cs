@@ -52,7 +52,8 @@ namespace AutomatedNest
             else
             {
                 NestForecast forecast = ForecastManager.ForecastManager.getForecast(credentials, txtZip.Text.ToString());
-                lblWeatherResult.Text = "Today's Low: " + forecast.todayLowTemp;
+                lblWeatherResult.Text = "Lowest Forecasted Temp: " + forecast.lowestForecastTemp.ToString();
+                lblTargetHumidity.Text = "Target Humidity: " + ForecastManager.ForecastManager.calculateTargetHumidity(forecast);
             }
         }
 

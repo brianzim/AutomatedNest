@@ -15,15 +15,27 @@ namespace AutomatedNest.NestDataObjects
         public NestForecast(string jsonForecastResponse)
         {
             this.jsonForecastResponse = JObject.Parse(jsonForecastResponse);
-
+            
             /* this.jsonForecastResponse.forecast.daily[0].low_temperature */
         }
 
-        public string todayLowTemp
+        public int lowestForecastTemp
         {
             get
             {
-                return this.jsonForecastResponse.forecast.daily[0].low_temperature.ToString();
+                int returnValue = 200;
+                
+                for(int i = 0; i <= 5; i++)
+                {
+                    int tempValue;
+                    int.TryParse(this.jsonForecastResponse.forecast.daily[i].low_temperature.ToString(), out tempValue);
+                    if (tempValue < returnValue)
+                    {
+                        returnValue = tempValue;
+                    }             
+                }
+
+                return returnValue;
             }
 
         }

@@ -40,6 +40,7 @@
             this.lblLoginResult = new System.Windows.Forms.Label();
             this.lblWeatherResult = new System.Windows.Forms.Label();
             this.lblStatusResult = new System.Windows.Forms.Label();
+            this.lblTargetHumidity = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -120,38 +121,48 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // txtLoginResult
+            // lblLoginResult
             // 
             this.lblLoginResult.AutoSize = true;
             this.lblLoginResult.Location = new System.Drawing.Point(12, 311);
-            this.lblLoginResult.Name = "txtLoginResult";
+            this.lblLoginResult.Name = "lblLoginResult";
             this.lblLoginResult.Size = new System.Drawing.Size(35, 13);
             this.lblLoginResult.TabIndex = 7;
             this.lblLoginResult.Text = "label4";
             // 
-            // txtWeatherResult
+            // lblWeatherResult
             // 
             this.lblWeatherResult.AutoSize = true;
             this.lblWeatherResult.Location = new System.Drawing.Point(226, 311);
-            this.lblWeatherResult.Name = "txtWeatherResult";
+            this.lblWeatherResult.Name = "lblWeatherResult";
             this.lblWeatherResult.Size = new System.Drawing.Size(35, 13);
             this.lblWeatherResult.TabIndex = 8;
             this.lblWeatherResult.Text = "label4";
             // 
-            // txtStatusResult
+            // lblStatusResult
             // 
             this.lblStatusResult.AutoSize = true;
             this.lblStatusResult.Location = new System.Drawing.Point(438, 308);
-            this.lblStatusResult.Name = "txtStatusResult";
+            this.lblStatusResult.Name = "lblStatusResult";
             this.lblStatusResult.Size = new System.Drawing.Size(35, 13);
             this.lblStatusResult.TabIndex = 9;
             this.lblStatusResult.Text = "label4";
+            // 
+            // lblTargetHumidity
+            // 
+            this.lblTargetHumidity.AutoSize = true;
+            this.lblTargetHumidity.Location = new System.Drawing.Point(226, 337);
+            this.lblTargetHumidity.Name = "lblTargetHumidity";
+            this.lblTargetHumidity.Size = new System.Drawing.Size(88, 13);
+            this.lblTargetHumidity.TabIndex = 10;
+            this.lblTargetHumidity.Text = "lblTargetHumidity";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(631, 370);
+            this.Controls.Add(this.lblTargetHumidity);
             this.Controls.Add(this.lblStatusResult);
             this.Controls.Add(this.lblWeatherResult);
             this.Controls.Add(this.lblLoginResult);
@@ -185,6 +196,7 @@
         private System.Windows.Forms.Label lblLoginResult;
         private System.Windows.Forms.Label lblWeatherResult;
         private System.Windows.Forms.Label lblStatusResult;
+        private System.Windows.Forms.Label lblTargetHumidity;
     }
 }
 
