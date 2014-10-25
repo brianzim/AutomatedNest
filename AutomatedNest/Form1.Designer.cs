@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtZip = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -64,7 +65,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(237, 214);
+            this.button2.Location = new System.Drawing.Point(226, 217);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(146, 80);
             this.button2.TabIndex = 3;
@@ -106,11 +107,22 @@
             this.txtZip.Size = new System.Drawing.Size(100, 20);
             this.txtZip.TabIndex = 7;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(438, 217);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(148, 78);
+            this.button3.TabIndex = 8;
+            this.button3.Text = "Get Nest Status";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(406, 316);
+            this.ClientSize = new System.Drawing.Size(631, 316);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.txtZip);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -136,6 +148,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtZip;
+        private System.Windows.Forms.Button button3;
     }
 }
 
