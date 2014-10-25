@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
 using AutomatedNest.ThermostatManager;
+using AutomatedNest.NestDataObjects;
 
 namespace AutomatedNest
 {
@@ -22,7 +23,7 @@ namespace AutomatedNest
         const string protocol_version = "1"; 
         const string login_url = "https://home.nest.com/user/login";
 
-        NestCredentials nc;
+        NestCredentials credentials;
 
         public Form1()
         {
@@ -31,7 +32,9 @@ namespace AutomatedNest
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            credentials = ThermostatManager.ThermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
+
+            /*
             HttpWebRequest request = WebRequest.Create(login_url) as HttpWebRequest;
             request.Method = "POST";
             request.UserAgent = "'Nest/2.1.3 CFNetwork/548.0.4'";
@@ -61,7 +64,7 @@ namespace AutomatedNest
             nc = new NestCredentials(jo.urls.transport_url.ToString(), jo.access_token.ToString(), jo.user.ToString(), jo.userid.ToString(), jo.expires_in.ToString());
             
 
-           
+            */
             
         }
 
@@ -78,7 +81,7 @@ namespace AutomatedNest
         }
 
         private void button2_Click(object sender, EventArgs e)
-        {
+        {/*
             //string url = nc.TransportURL + "/v2/mobile/" + nc.User;
             string url = "https://home.nest.com/api/0.1/weather/forecast/" + txtZip.Text.ToString();
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
@@ -101,11 +104,11 @@ namespace AutomatedNest
 
 
             }
-            dynamic jo = JObject.Parse(responseBody);
+            dynamic jo = JObject.Parse(responseBody);*/
         }
 
         private void button3_Click(object sender, EventArgs e)
-        {
+        {/*
             string url = nc.TransportURL + "/v2/mobile/" + nc.User;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             request.Method = "GET";
@@ -128,6 +131,7 @@ namespace AutomatedNest
 
             }
             dynamic jo = JObject.Parse(responseBody);
+          * */
         }
     }
 }

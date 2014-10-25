@@ -51,6 +51,10 @@
       <Project>{6b032fcf-8fa2-4016-a5d9-b3b5e08470ca}</Project>
       <Name>AutomatedNest.ThermostatEngines</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutomatedNest.UnofficialNestAPI\AutomatedNest.UnofficialNestAPI.csproj">
+      <Project>{683ab04a-205b-4ffc-9d4f-731273310eb8}</Project>
+      <Name>AutomatedNest.UnofficialNestAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

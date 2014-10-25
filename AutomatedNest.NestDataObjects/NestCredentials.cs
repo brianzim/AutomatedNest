@@ -3,49 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AutomatedNest.NestDataObjects
 {
     public class NestCredentials
     {
-        public NestCredentials(string transportURL, string accessToken, string user, string userID, string cacheExpiration)
+        dynamic jsonLoginResponse;
+
+        public NestCredentials(string jsonLoginResponse)
         {
-            this.transportURL = transportURL;
-            this.accessToken = accessToken;
-            this.user = user;
-            this.userID = userID;
-            this.cacheExpiration = cacheExpiration;
+            this.jsonLoginResponse = JObject.Parse(jsonLoginResponse);      
         }
 
-        private string transportURL;
-        private string accessToken;
-        private string user;
-        private string userID;
-        private string cacheExpiration;
 
         public string TransportURL
         {
-            get { return transportURL; }
+            get { return jsonLoginResponse.urls.transport_url.ToString(); }
         }
 
         public string AccessToken
         {
-            get { return accessToken; }
+            get { return jsonLoginResponse.access_token.ToString(); }
         }
 
         public string User
         {
-            get { return user; }
+            get { return jsonLoginResponse.user.ToString(); }
         }
 
         public string UserID
         {
-            get { return userID; }
+            get { return jsonLoginResponse.userid.ToString(); }
         }
 
         public string CacheExpiration
         {
-            get { return cacheExpiration; }
+            get { return jsonLoginResponse.expires_in.ToString(); }
         }
     }
 }
