@@ -18,5 +18,14 @@ namespace AutomatedNest.NestDataObjects
 
             /* this.jsonForecastResponse.forecast.daily[0].low_temperature */
         }
+
+        public string todayLowTemp
+        {
+            get
+            {
+                return this.jsonForecastResponse.forecast.daily[0].low_temperature.ToString();
+            }
+
+        }
     }
 }

@@ -28,17 +28,45 @@ namespace AutomatedNest
 
         private void button1_Click(object sender, EventArgs e)
         {
-            credentials = ThermostatManager.ThermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());   
+            if (txtUserName.Text.ToString().Equals("") || txtPassword.Text.ToString().Equals(""))
+            {
+                MessageBox.Show("Please enter a UN and PW.");
+            }
+            else
+            {
+                credentials = ThermostatManager.ThermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
+                lblLoginResult.Text = credentials.User;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            NestForecast forecast = ForecastManager.ForecastManager.getForecast(credentials, txtZip.Text.ToString());         
+            if (txtZip.Text.ToString().Equals(""))
+            {
+                MessageBox.Show("Please enter your zip.");
+            }
+            else if(credentials == null)
+            {
+                MessageBox.Show("Please log in.");
+            }
+            else
+            {
+                NestForecast forecast = ForecastManager.ForecastManager.getForecast(credentials, txtZip.Text.ToString());
+                lblWeatherResult.Text = "Today's Low: " + forecast.todayLowTemp;
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            NestStatus status = ThermostatManager.ThermostatManager.getStatus(credentials);
+            if (credentials == null)
+            {
+                MessageBox.Show("Please log in.");
+            }
+            else
+            {
+                NestStatus status = ThermostatManager.ThermostatManager.getStatus(credentials);
+                lblStatusResult.Text = "";
+            }
         }
     }
 }

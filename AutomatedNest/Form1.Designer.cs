@@ -37,6 +37,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtZip = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.lblLoginResult = new System.Windows.Forms.Label();
+            this.lblWeatherResult = new System.Windows.Forms.Label();
+            this.lblStatusResult = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -117,11 +120,41 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // txtLoginResult
+            // 
+            this.lblLoginResult.AutoSize = true;
+            this.lblLoginResult.Location = new System.Drawing.Point(12, 311);
+            this.lblLoginResult.Name = "txtLoginResult";
+            this.lblLoginResult.Size = new System.Drawing.Size(35, 13);
+            this.lblLoginResult.TabIndex = 7;
+            this.lblLoginResult.Text = "label4";
+            // 
+            // txtWeatherResult
+            // 
+            this.lblWeatherResult.AutoSize = true;
+            this.lblWeatherResult.Location = new System.Drawing.Point(226, 311);
+            this.lblWeatherResult.Name = "txtWeatherResult";
+            this.lblWeatherResult.Size = new System.Drawing.Size(35, 13);
+            this.lblWeatherResult.TabIndex = 8;
+            this.lblWeatherResult.Text = "label4";
+            // 
+            // txtStatusResult
+            // 
+            this.lblStatusResult.AutoSize = true;
+            this.lblStatusResult.Location = new System.Drawing.Point(438, 308);
+            this.lblStatusResult.Name = "txtStatusResult";
+            this.lblStatusResult.Size = new System.Drawing.Size(35, 13);
+            this.lblStatusResult.TabIndex = 9;
+            this.lblStatusResult.Text = "label4";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(631, 316);
+            this.ClientSize = new System.Drawing.Size(631, 370);
+            this.Controls.Add(this.lblStatusResult);
+            this.Controls.Add(this.lblWeatherResult);
+            this.Controls.Add(this.lblLoginResult);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.txtZip);
             this.Controls.Add(this.label3);
@@ -149,6 +182,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtZip;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label lblLoginResult;
+        private System.Windows.Forms.Label lblWeatherResult;
+        private System.Windows.Forms.Label lblStatusResult;
     }
 }
 
