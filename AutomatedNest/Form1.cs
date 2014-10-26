@@ -14,6 +14,7 @@ using System.IO;
 using AutomatedNest.ThermostatManager;
 using AutomatedNest.ForecastManager;
 using AutomatedNest.NestDataObjects;
+using AutomatedNest.ThermostatEngines;
 
 namespace AutomatedNest
 {
@@ -53,7 +54,7 @@ namespace AutomatedNest
             {
                 NestForecast forecast = ForecastManager.ForecastManager.getForecast(credentials, txtZip.Text.ToString());
                 lblWeatherResult.Text = "Lowest Forecasted Temp: " + forecast.LowestForecastTemp.ToString();
-                lblTargetHumidity.Text = "Target Humidity: " + ForecastManager.ForecastManager.calculateTargetHumidity(forecast, 5);
+                lblTargetHumidity.Text = "Target Humidity: " + ForecastManager.ForecastManager.calculateTargetHumidity(forecast, ThermostatEngines.HumidityEngines.HumidityMode.Normal);
             }
         }
 

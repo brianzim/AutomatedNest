@@ -7,14 +7,21 @@ using AutomatedNest.NestDataObjects;
 
 namespace AutomatedNest.ThermostatEngines
 {
+
     public static class HumidityEngines
     {
-        public static int calculateOptimalHumidity(NestForecast forecast, int mode)
+        public enum HumidityMode
+        {
+            Normal = 5,
+            Aggressive = 7,
+            Conservative = 2,
+        }
+        public static int calculateOptimalHumidity(NestForecast forecast, HumidityMode mode)
         {
             // Calculations Based On AprilAire: http://www.aprilaire.com/docs/default-source/product-owners-manuals/humidifier/aprilaire-humidifier-model-700-owners-manual.pdf?Status=Master&sfvrsn=6
 
             
-            if (mode == 5) {
+            if (mode == HumidityMode.Normal) {
                     if (forecast.LowestForecastTemp >= 40) { return 45; }
                     else if (forecast.LowestForecastTemp >= 30) { return 40; }
                     else if (forecast.LowestForecastTemp >= 20) { return 35; }
@@ -24,7 +31,8 @@ namespace AutomatedNest.ThermostatEngines
                     else { return 15; }
             }
 
-            else if (mode == 7) {
+            else if (mode == HumidityMode.Aggressive)
+            {
                     if (forecast.LowestForecastTemp >= 40) { return 45; }
                     else if (forecast.LowestForecastTemp >= 30) { return 45; }
                     else if (forecast.LowestForecastTemp >= 20) { return 45; }
@@ -34,7 +42,7 @@ namespace AutomatedNest.ThermostatEngines
                     else { return 25; }
             }
 
-            else if (mode == 2)
+            else if (mode == HumidityMode.Conservative)
             {
                 if (forecast.LowestForecastTemp >= 40) { return 30; }
                 else if (forecast.LowestForecastTemp >= 30) { return 25; }
