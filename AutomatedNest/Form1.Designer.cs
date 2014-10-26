@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
@@ -41,6 +43,7 @@
             this.lblWeatherResult = new System.Windows.Forms.Label();
             this.lblStatusResult = new System.Windows.Forms.Label();
             this.lblTargetHumidity = new System.Windows.Forms.Label();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // button1
@@ -148,7 +151,6 @@
             this.lblStatusResult.Size = new System.Drawing.Size(53, 13);
             this.lblStatusResult.TabIndex = 9;
             this.lblStatusResult.Text = "(no result)";
-            this.lblStatusResult.Click += new System.EventHandler(this.lblStatusResult_Click);
             // 
             // lblTargetHumidity
             // 
@@ -158,6 +160,15 @@
             this.lblTargetHumidity.Size = new System.Drawing.Size(53, 13);
             this.lblTargetHumidity.TabIndex = 10;
             this.lblTargetHumidity.Text = "(no result)";
+            // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.BalloonTipText = "AutomatedNest is still running";
+            this.notifyIcon1.BalloonTipTitle = "AutomatedNest";
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // Form1
             // 
@@ -178,7 +189,9 @@
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
+            this.ShowInTaskbar = false;
             this.Text = "Test Client";
+            this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,6 +212,7 @@
         private System.Windows.Forms.Label lblWeatherResult;
         private System.Windows.Forms.Label lblStatusResult;
         private System.Windows.Forms.Label lblTargetHumidity;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 

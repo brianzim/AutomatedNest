@@ -71,10 +71,27 @@ namespace AutomatedNest
                 txtZip.Text = status.PostalCode;
             }
         }
-
-        private void lblStatusResult_Click(object sender, EventArgs e)
+ 
+        private void frmMain_Resize(object sender, EventArgs e)
         {
+            if (FormWindowState.Minimized == this.WindowState)
+            {
+                notifyIcon1.Visible = true;
+                this.Hide();
 
+            }
+            else if (FormWindowState.Normal == this.WindowState)
+            {
+                notifyIcon1.Visible = true;
+                this.Hide();
+            }
         }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+        }
+ 
     }
 }
