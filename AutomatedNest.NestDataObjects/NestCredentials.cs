@@ -10,7 +10,7 @@ namespace AutomatedNest.NestDataObjects
 {
     public class NestCredentials
     {
-        dynamic jsonLoginResponse;
+        JObject jsonLoginResponse;
 
         public NestCredentials(string jsonLoginResponse)
         {
@@ -20,27 +20,27 @@ namespace AutomatedNest.NestDataObjects
 
         public string TransportURL
         {
-            get { return jsonLoginResponse.urls.transport_url.ToString(); }
+            get { return jsonLoginResponse["urls"]["transport_url"].ToString(); }
         }
 
         public string AccessToken
         {
-            get { return jsonLoginResponse.access_token.ToString(); }
+            get { return jsonLoginResponse["access_token"].ToString(); }
         }
 
         public string User
         {
-            get { return jsonLoginResponse.user.ToString(); }
+            get { return jsonLoginResponse["user"].ToString(); }
         }
 
         public string UserID
         {
-            get { return jsonLoginResponse.userid.ToString(); }
+            get { return jsonLoginResponse["userid"].ToString(); }
         }
 
         public string CacheExpiration
         {
-            get { return jsonLoginResponse.expires_in.ToString(); }
+            get { return jsonLoginResponse["expires_in"].ToString(); }
         }
     }
 }

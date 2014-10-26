@@ -11,12 +11,12 @@ namespace AutomatedNest.ThermostatEngines
     {
         public static int calculateOptimalHumidity(NestForecast forecast)
         {
-            if (forecast.lowestForecastTemp >= 40) { return 45; }
-            else if (forecast.lowestForecastTemp >= 30) { return 40; }
-            else if (forecast.lowestForecastTemp >= 20) { return 35; }
-            else if (forecast.lowestForecastTemp >= 10) { return 30; }
-            else if (forecast.lowestForecastTemp >= 0) { return 25; }
-            else if (forecast.lowestForecastTemp >= -10) { return 20; }
+            if (forecast.LowestForecastTemp >= 40) { return 45; }
+            else if (forecast.LowestForecastTemp >= 30) { return 40; }
+            else if (forecast.LowestForecastTemp >= 20) { return 35; }
+            else if (forecast.LowestForecastTemp >= 10) { return 30; }
+            else if (forecast.LowestForecastTemp >= 0) { return 25; }
+            else if (forecast.LowestForecastTemp >= -10) { return 20; }
             else { return 15; }
             
         }

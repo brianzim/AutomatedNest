@@ -10,15 +10,44 @@ namespace AutomatedNest.NestDataObjects
 {
     public class NestStatus
     {
-        dynamic jsonStatusResponse;
+        JObject jsonStatusResponse;
 
         public NestStatus(string jsonStatusResponse)
         {
             this.jsonStatusResponse = JObject.Parse(jsonStatusResponse);
 
-         //   JObject jo = JObject.Parse(jsonStatusResponse);
-          //  string result = (string)jo["device"][0];
+        }
 
+        public string StructureGUID { 
+            get 
+            {
+                JObject structureobj = (JObject)this.jsonStatusResponse["structure"];
+                IList<string> structpropertyNames = structureobj.Properties().Select(p => p.Name).ToList();
+                return structpropertyNames[0];
+            }
+        }
+        public string SerialNumber
+        {
+            get
+            {
+                JObject deviceobj = (JObject)this.jsonStatusResponse["device"];
+                IList<string> propertyNames = deviceobj.Properties().Select(p => p.Name).ToList();
+                return propertyNames[0];
+            }
+        }
+        public string PostalCode
+        {
+            get
+            {
+                return this.jsonStatusResponse["structure"][this.StructureGUID]["postal_code"].ToString();
+            }
+        }
+        public string CurrentHumidity
+        {
+            get
+            {
+                return this.jsonStatusResponse["device"][this.SerialNumber]["current_humidity"].ToString();
+            }
         }
     }
 }

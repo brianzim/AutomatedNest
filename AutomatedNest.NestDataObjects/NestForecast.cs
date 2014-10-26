@@ -10,16 +10,14 @@ namespace AutomatedNest.NestDataObjects
 {
     public class NestForecast
     {
-        dynamic jsonForecastResponse;
+        JObject jsonForecastResponse;
 
         public NestForecast(string jsonForecastResponse)
         {
             this.jsonForecastResponse = JObject.Parse(jsonForecastResponse);
-            
-            /* this.jsonForecastResponse.forecast.daily[0].low_temperature */
         }
 
-        public int lowestForecastTemp
+        public int LowestForecastTemp
         {
             get
             {
@@ -28,7 +26,7 @@ namespace AutomatedNest.NestDataObjects
                 for(int i = 0; i <= 5; i++)
                 {
                     int tempValue;
-                    int.TryParse(this.jsonForecastResponse.forecast.daily[i].low_temperature.ToString(), out tempValue);
+                    int.TryParse(this.jsonForecastResponse["forecast"]["daily"][i]["low_temperature"].ToString(), out tempValue);
                     if (tempValue < returnValue)
                     {
                         returnValue = tempValue;

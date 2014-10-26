@@ -64,12 +64,13 @@
             // 
             this.txtPassword.Location = new System.Drawing.Point(142, 91);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(172, 20);
             this.txtPassword.TabIndex = 2;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(226, 217);
+            this.button2.Location = new System.Drawing.Point(439, 219);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(146, 80);
             this.button2.TabIndex = 5;
@@ -113,7 +114,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(438, 217);
+            this.button3.Location = new System.Drawing.Point(220, 219);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(148, 78);
             this.button3.TabIndex = 6;
@@ -126,36 +127,37 @@
             this.lblLoginResult.AutoSize = true;
             this.lblLoginResult.Location = new System.Drawing.Point(12, 311);
             this.lblLoginResult.Name = "lblLoginResult";
-            this.lblLoginResult.Size = new System.Drawing.Size(35, 13);
+            this.lblLoginResult.Size = new System.Drawing.Size(53, 13);
             this.lblLoginResult.TabIndex = 7;
-            this.lblLoginResult.Text = "label4";
+            this.lblLoginResult.Text = "(no result)";
             // 
             // lblWeatherResult
             // 
             this.lblWeatherResult.AutoSize = true;
-            this.lblWeatherResult.Location = new System.Drawing.Point(226, 311);
+            this.lblWeatherResult.Location = new System.Drawing.Point(439, 313);
             this.lblWeatherResult.Name = "lblWeatherResult";
-            this.lblWeatherResult.Size = new System.Drawing.Size(35, 13);
+            this.lblWeatherResult.Size = new System.Drawing.Size(53, 13);
             this.lblWeatherResult.TabIndex = 8;
-            this.lblWeatherResult.Text = "label4";
+            this.lblWeatherResult.Text = "(no result)";
             // 
             // lblStatusResult
             // 
             this.lblStatusResult.AutoSize = true;
-            this.lblStatusResult.Location = new System.Drawing.Point(438, 308);
+            this.lblStatusResult.Location = new System.Drawing.Point(220, 310);
             this.lblStatusResult.Name = "lblStatusResult";
-            this.lblStatusResult.Size = new System.Drawing.Size(35, 13);
+            this.lblStatusResult.Size = new System.Drawing.Size(53, 13);
             this.lblStatusResult.TabIndex = 9;
-            this.lblStatusResult.Text = "label4";
+            this.lblStatusResult.Text = "(no result)";
+            this.lblStatusResult.Click += new System.EventHandler(this.lblStatusResult_Click);
             // 
             // lblTargetHumidity
             // 
             this.lblTargetHumidity.AutoSize = true;
-            this.lblTargetHumidity.Location = new System.Drawing.Point(226, 337);
+            this.lblTargetHumidity.Location = new System.Drawing.Point(439, 339);
             this.lblTargetHumidity.Name = "lblTargetHumidity";
-            this.lblTargetHumidity.Size = new System.Drawing.Size(88, 13);
+            this.lblTargetHumidity.Size = new System.Drawing.Size(53, 13);
             this.lblTargetHumidity.TabIndex = 10;
-            this.lblTargetHumidity.Text = "lblTargetHumidity";
+            this.lblTargetHumidity.Text = "(no result)";
             // 
             // Form1
             // 
@@ -176,7 +178,7 @@
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Test Client";
             this.ResumeLayout(false);
             this.PerformLayout();
 

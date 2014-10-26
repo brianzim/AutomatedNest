@@ -52,7 +52,7 @@ namespace AutomatedNest
             else
             {
                 NestForecast forecast = ForecastManager.ForecastManager.getForecast(credentials, txtZip.Text.ToString());
-                lblWeatherResult.Text = "Lowest Forecasted Temp: " + forecast.lowestForecastTemp.ToString();
+                lblWeatherResult.Text = "Lowest Forecasted Temp: " + forecast.LowestForecastTemp.ToString();
                 lblTargetHumidity.Text = "Target Humidity: " + ForecastManager.ForecastManager.calculateTargetHumidity(forecast);
             }
         }
@@ -66,8 +66,14 @@ namespace AutomatedNest
             else
             {
                 NestStatus status = ThermostatManager.ThermostatManager.getStatus(credentials);
-                lblStatusResult.Text = "";
+                lblStatusResult.Text = "Current Humidity: " + status.CurrentHumidity;
+                txtZip.Text = status.PostalCode;
             }
+        }
+
+        private void lblStatusResult_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
