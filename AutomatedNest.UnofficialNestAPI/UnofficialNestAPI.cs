@@ -43,9 +43,7 @@ namespace AutomatedNest.UnofficialNestAPI
                 }
             }
 
-            NestCredentials nc = JsonConvert.DeserializeObject<NestCredentials>(responseBody);
-
-            return nc;
+            return JsonConvert.DeserializeObject<NestCredentials>(responseBody);
 
         }
 
@@ -72,9 +70,7 @@ namespace AutomatedNest.UnofficialNestAPI
 
             }
 
-            NestForecastBase nfb = JsonConvert.DeserializeObject<NestForecastBase>(responseBody);
-
-            return nfb;
+            return JsonConvert.DeserializeObject<NestForecastBase>(responseBody);
         }
 
         public static NestStatus getNestStatus(NestCredentials credentials)
