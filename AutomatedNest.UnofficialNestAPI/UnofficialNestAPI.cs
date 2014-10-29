@@ -45,14 +45,11 @@ namespace AutomatedNest.UnofficialNestAPI
 
             NestCredentials nc = JsonConvert.DeserializeObject<NestCredentials>(responseBody);
 
-
             return nc;
-
-            //return new NestCredentials(responseBody);
 
         }
 
-        public static NestForecast getForecast(NestCredentials credentials, string zip)
+        public static NestForecastBase getForecast(NestCredentials credentials, string zip)
         {
             string url = forecastURL + zip;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
@@ -75,7 +72,9 @@ namespace AutomatedNest.UnofficialNestAPI
 
             }
 
-            return new NestForecast(responseBody);
+            NestForecastBase nfb = JsonConvert.DeserializeObject<NestForecastBase>(responseBody);
+
+            return nfb;
         }
 
         public static NestStatus getNestStatus(NestCredentials credentials)

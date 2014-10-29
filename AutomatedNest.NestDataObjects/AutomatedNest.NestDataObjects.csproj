@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NestCredentials.cs" />
-    <Compile Include="NestForecast.cs" />
+    <Compile Include="NestForecastBase.cs" />
     <Compile Include="NestStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
