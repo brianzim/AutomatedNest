@@ -36,7 +36,7 @@ namespace AutomatedNest
             else
             {
                 credentials = ThermostatManager.ThermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
-                lblLoginResult.Text = credentials.User;
+                lblLoginResult.Text = credentials.user;
             }
         }
 

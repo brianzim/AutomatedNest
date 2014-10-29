@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutomatedNest.NestDataObjects;
 using System.Net;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace AutomatedNest.UnofficialNestAPI
 {
@@ -42,7 +43,12 @@ namespace AutomatedNest.UnofficialNestAPI
                 }
             }
 
-            return new NestCredentials(responseBody);
+            NestCredentials nc = JsonConvert.DeserializeObject<NestCredentials>(responseBody);
+
+
+            return nc;
+
+            //return new NestCredentials(responseBody);
 
         }
 
@@ -53,9 +59,9 @@ namespace AutomatedNest.UnofficialNestAPI
             request.Method = "GET";
             request.UserAgent = userAgent;
             request.Headers.Add("X-nl-protocol-version", protocol_version);
-            request.Headers.Add("X-nl-user-d", credentials.UserID);
+            request.Headers.Add("X-nl-user-d", credentials.userid);
             request.ContentType = "application/x-www-form-urlencoded";
-            request.Headers.Set("Authorization", string.Format("Basic ", credentials.AccessToken));
+            request.Headers.Set("Authorization", string.Format("Basic ", credentials.access_token));
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string responseBody;
@@ -74,13 +80,13 @@ namespace AutomatedNest.UnofficialNestAPI
 
         public static NestStatus getNestStatus(NestCredentials credentials)
         {
-            string url = credentials.TransportURL + "/v2/mobile/" + credentials.User;
+            string url = credentials.urls.transport_url + "/v2/mobile/" + credentials.user;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             request.Method = "GET";
             request.UserAgent = userAgent;
             request.Headers.Add("X-nl-protocol-version", protocol_version);
-            request.Headers.Add("X-nl-user-d", credentials.UserID);
-            string auth = "Basic " + credentials.AccessToken;
+            request.Headers.Add("X-nl-user-d", credentials.userid);
+            string auth = "Basic " + credentials.access_token;
             request.Headers.Set("Authorization", auth);
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
