@@ -49,16 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestClientMain.cs">
+    <Compile Include="ClientMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TestClientMain.Designer.cs">
-      <DependentUpon>TestClientMain.cs</DependentUpon>
+    <Compile Include="ClientMain.Designer.cs">
+      <DependentUpon>ClientMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="TestClientMain.resx">
-      <DependentUpon>TestClientMain.cs</DependentUpon>
+    <EmbeddedResource Include="ClientMain.resx">
+      <DependentUpon>ClientMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

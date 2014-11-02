@@ -16,7 +16,7 @@ namespace AutomatedNest.ForecastManager
             return UnofficialNestAPI.UnofficialNestAPI.getForecast(credentials, zip);
         }
 
-        public static int calculateTargetHumidity(NestForecastBase forecast, HumidityEngines.HumidityMode mode)
+        public static int calculateTargetHumidity(NestForecastBase forecast, HumidityMode mode)
         {
             return ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, mode);
         }

@@ -10,12 +10,6 @@ namespace AutomatedNest.ThermostatEngines
 
     public static class HumidityEngines
     {
-        public enum HumidityMode
-        {
-            Normal = 5,
-            Aggressive = 7,
-            Conservative = 2,
-        }
         public static int calculateOptimalHumidity(NestForecastBase forecast, HumidityMode mode)
         {
             // Calculations Based On AprilAire: http://www.aprilaire.com/docs/default-source/product-owners-manuals/humidifier/aprilaire-humidifier-model-700-owners-manual.pdf?Status=Master&sfvrsn=6

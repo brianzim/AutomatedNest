@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HumidityModes.cs" />
     <Compile Include="NestCredentials.cs" />
     <Compile Include="NestForecastBase.cs" />
     <Compile Include="NestStatus.cs" />

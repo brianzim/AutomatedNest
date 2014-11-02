@@ -16,7 +16,7 @@ namespace AutomatedNest
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestClientMain());
+            Application.Run(new ClientMain());
         }
     }
 }

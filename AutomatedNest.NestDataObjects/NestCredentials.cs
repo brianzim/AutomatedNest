@@ -20,7 +20,18 @@ namespace AutomatedNest.NestDataObjects
     }
     public class NestCredentials
     {
-        public bool success { get; set; }
+        public bool success { 
+            get
+            {
+                if (error == null && access_token != null)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        
+        }
         public string error { get; set; }
         public string access_token { get; set; }
         public string user { get; set; }
@@ -29,8 +40,6 @@ namespace AutomatedNest.NestDataObjects
         public string email { get; set; }
         public string userid { get; set; }
 
-
-        JObject jsonLoginResponse;
         public NestCredentials()
         {  
         }

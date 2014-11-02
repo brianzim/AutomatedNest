@@ -53,7 +53,7 @@ namespace AutomatedNest.UnofficialNestAPI
             catch (Exception e)
             {
                 returnNestCredentials = new NestCredentials();
-                returnNestCredentials.success = false;
+
                 if (e.Message == "The remote server returned an error: (400) Bad Request.")
                 {
                     returnNestCredentials.error = "Username or Password was not recognized.  Please try again.";
