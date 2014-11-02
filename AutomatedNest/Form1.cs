@@ -36,7 +36,15 @@ namespace AutomatedNest
             else
             {
                 credentials = ThermostatManager.ThermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
-                lblLoginResult.Text = credentials.user;
+
+                if (credentials.success)
+                {
+                    lblLoginResult.Text = credentials.user;
+                }
+                else
+                {
+                    MessageBox.Show(credentials.error, "Failed to Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

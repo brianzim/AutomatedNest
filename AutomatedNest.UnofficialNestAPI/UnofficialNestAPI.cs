@@ -32,18 +32,41 @@ namespace AutomatedNest.UnofficialNestAPI
                 writer.Write(WriteEncodedFormParameter("password", password));
             }
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string responseBody;
+            NestCredentials returnNestCredentials;
 
-            using (Stream stream = response.GetResponseStream())
+            try
             {
-                using (StreamReader reader = new StreamReader(stream))
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string responseBody;
+
+                using (Stream stream = response.GetResponseStream())
                 {
-                    responseBody = reader.ReadToEnd();
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        responseBody = reader.ReadToEnd();
+                    }
                 }
+
+                returnNestCredentials = JsonConvert.DeserializeObject<NestCredentials>(responseBody);
+            }
+            catch (Exception e)
+            {
+                returnNestCredentials = new NestCredentials();
+                returnNestCredentials.success = false;
+                if (e.Message == "The remote server returned an error: (400) Bad Request.")
+                {
+                    returnNestCredentials.error = "Username or Password was not recognized.  Please try again.";
+                }
+                else
+                { 
+                    returnNestCredentials.error = e.Message; 
+                }
+                
+
             }
 
-            return JsonConvert.DeserializeObject<NestCredentials>(responseBody);
+            return returnNestCredentials;
 
         }
 

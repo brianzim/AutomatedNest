@@ -20,6 +20,8 @@ namespace AutomatedNest.NestDataObjects
     }
     public class NestCredentials
     {
+        public bool success { get; set; }
+        public string error { get; set; }
         public string access_token { get; set; }
         public string user { get; set; }
         public NestCredentialsURLS urls { get; set; }
