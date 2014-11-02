@@ -18,11 +18,11 @@ using AutomatedNest.ThermostatEngines;
 
 namespace AutomatedNest
 {
-    public partial class Form1 : Form
+    public partial class TestClientMain : Form
     {
         NestCredentials credentials;
 
-        public Form1()
+        public TestClientMain()
         {
             InitializeComponent();
         }
@@ -31,7 +31,7 @@ namespace AutomatedNest
         {
             if (txtUserName.Text.ToString().Equals("") || txtPassword.Text.ToString().Equals(""))
             {
-                MessageBox.Show("Please enter a UN and PW.");
+                MessageBox.Show("Please enter a username and password to begin.");
             }
             else
             {
