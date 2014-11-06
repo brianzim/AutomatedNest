@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedNest", "AutomatedNest\AutomatedNest.csproj", "{C95E1938-2FA8-4658-82A0-EDAE15E959BC}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -32,8 +32,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedNest.UnofficialNestAPI", "AutomatedNest.UnofficialNestAPI\AutomatedNest.UnofficialNestAPI.csproj", "{683AB04A-205B-4FFC-9D4F-731273310EB8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedNest.NestDataObjects", "AutomatedNest.NestDataObjects\AutomatedNest.NestDataObjects.csproj", "{8A8005D9-24E3-4907-BDD9-66836ABC7EE4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedNest.ForecastManager", "AutomatedNest.ForecastManager\AutomatedNest.ForecastManager.csproj", "{009E692C-DAC0-4274-AF6B-37C8E5B6BC58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,16 +115,6 @@ Global
 		{8A8005D9-24E3-4907-BDD9-66836ABC7EE4}.Release|ARM.ActiveCfg = Release|Any CPU
 		{8A8005D9-24E3-4907-BDD9-66836ABC7EE4}.Release|x64.ActiveCfg = Release|Any CPU
 		{8A8005D9-24E3-4907-BDD9-66836ABC7EE4}.Release|x86.ActiveCfg = Release|Any CPU
-		{009E692C-DAC0-4274-AF6B-37C8E5B6BC58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{009E692C-DAC0-4274-AF6B-37C8E5B6BC58}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{009E692C-DAC0-4274-AF6B-37C8E5B6BC58}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{009E692C-DAC0-4274-AF6B-37C8E5B6BC58}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{009E692C-DAC0-4274-AF6B-37C8E5B6BC58}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{009E692C-DAC0-4274-AF6B-37C8E5B6BC58}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{009E692C-DAC0-4274-AF6B-37C8E5B6BC58}.Release|Any CPU.Build.0 = Release|Any CPU
-		{009E692C-DAC0-4274-AF6B-37C8E5B6BC58}.Release|ARM.ActiveCfg = Release|Any CPU
-		{009E692C-DAC0-4274-AF6B-37C8E5B6BC58}.Release|x64.ActiveCfg = Release|Any CPU
-		{009E692C-DAC0-4274-AF6B-37C8E5B6BC58}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,6 +127,5 @@ Global
 		{6B032FCF-8FA2-4016-A5D9-B3B5E08470CA} = {5E732A17-B9DF-4193-B4B0-C91787B7997A}
 		{683AB04A-205B-4FFC-9D4F-731273310EB8} = {1C6106D4-F51E-43C5-9CB1-9CAB71D4DBC2}
 		{8A8005D9-24E3-4907-BDD9-66836ABC7EE4} = {49F24D55-E8AC-4EA2-9E44-0CBBA6398E7D}
-		{009E692C-DAC0-4274-AF6B-37C8E5B6BC58} = {46F0FBB9-E054-449B-81EF-43AD65283152}
 	EndGlobalSection
 EndGlobal

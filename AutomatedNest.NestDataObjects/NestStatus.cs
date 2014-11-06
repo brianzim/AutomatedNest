@@ -18,6 +18,26 @@ namespace AutomatedNest.NestDataObjects
 
         }
 
+        public int TargetHumidity
+        {
+            get
+            {
+                int result;
+                int.TryParse(this.jsonStatusResponse["device"][this.SerialNumber]["target_humidity"].ToString(), out result);
+                return result;
+            }
+        }
+
+        public bool HasHumidifier
+        {
+            get
+            {
+                //if (this.jsonStatusResponse["device"][this.SerialNumber]["has_humidifier"].ToString() == "False")
+                //    return false;
+                return true;
+            }
+        }
+
         public string StructureGUID { 
             get 
             {

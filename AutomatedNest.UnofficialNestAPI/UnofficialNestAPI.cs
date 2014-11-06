@@ -121,6 +121,14 @@ namespace AutomatedNest.UnofficialNestAPI
             return new NestStatus(responseBody);
         }
 
+        public static NestAPISetTargetHumidityResponse setTargetHumidity(NestCredentials credentials, int newTargetHumidity)
+        {
+            NestAPISetTargetHumidityResponse response = new NestAPISetTargetHumidityResponse();
+            response.ResponseResult = NestAPISetTargetHumidityResponse.ResponseResultOptions.ERROR;
+            response.ErrorMessage = "API Not Implemented.";
+            return response;
+        }
+
         public static string getAPI(string url) { return null;  }
 
         private static string WriteEncodedFormParameter(string key, string value)

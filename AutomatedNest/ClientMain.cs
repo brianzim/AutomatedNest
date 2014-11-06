@@ -12,7 +12,6 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
 using AutomatedNest.ThermostatManager;
-using AutomatedNest.ForecastManager;
 using AutomatedNest.NestDataObjects;
 using AutomatedNest.ThermostatEngines;
 
@@ -85,7 +84,8 @@ namespace AutomatedNest
 
         private void MainTimer_Tick(object sender, EventArgs e)
         {
-            logStatus("Tick");
+            OptimizeHumidityResult result = ThermostatManager.ThermostatManager.optimizeHumidity(credentials, (HumidityMode)HumidityComboBox.SelectedValue);
+            logStatus(result.OperationStatus);
         }
 
         private void logStatus(string status)

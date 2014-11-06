@@ -45,9 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HumidityModes.cs" />
+    <Compile Include="NestAPISetTargetHumidityResponse.cs" />
     <Compile Include="NestCredentials.cs" />
     <Compile Include="NestForecastBase.cs" />
     <Compile Include="NestStatus.cs" />
+    <Compile Include="OptimizeHumidityResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

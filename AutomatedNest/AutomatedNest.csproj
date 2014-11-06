@@ -85,10 +85,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutomatedNest.ForecastManager\AutomatedNest.ForecastManager.csproj">
-      <Project>{009e692c-dac0-4274-af6b-37c8e5b6bc58}</Project>
-      <Name>AutomatedNest.ForecastManager</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AutomatedNest.NestDataObjects\AutomatedNest.NestDataObjects.csproj">
       <Project>{8a8005d9-24e3-4907-bdd9-66836abc7ee4}</Project>
       <Name>AutomatedNest.NestDataObjects</Name>
