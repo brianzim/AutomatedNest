@@ -151,6 +151,7 @@
             // 
             // IntervalComboBox
             // 
+            this.IntervalComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.IntervalComboBox.FormattingEnabled = true;
             this.IntervalComboBox.Items.AddRange(new object[] {
             "10",
@@ -163,7 +164,9 @@
             // 
             // HumidityComboBox
             // 
+            this.HumidityComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.HumidityComboBox.FormattingEnabled = true;
+            this.HumidityComboBox.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.HumidityComboBox.Location = new System.Drawing.Point(188, 116);
             this.HumidityComboBox.Name = "HumidityComboBox";
             this.HumidityComboBox.Size = new System.Drawing.Size(189, 21);
