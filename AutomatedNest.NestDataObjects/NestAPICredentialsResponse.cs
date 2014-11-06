@@ -18,7 +18,7 @@ namespace AutomatedNest.NestDataObjects
         public string support_url { get; set; }
 
     }
-    public class NestCredentials
+    public class NestAPICredentialsResponse
     {
         public bool success { 
             get
@@ -40,7 +40,7 @@ namespace AutomatedNest.NestDataObjects
         public string email { get; set; }
         public string userid { get; set; }
 
-        public NestCredentials()
+        public NestAPICredentialsResponse()
         {  
         }
     }

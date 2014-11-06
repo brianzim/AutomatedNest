@@ -8,11 +8,11 @@ using Newtonsoft.Json.Linq;
 
 namespace AutomatedNest.NestDataObjects
 {
-    public class NestStatus
+    public class NestAPIStatusResponse
     {
         JObject jsonStatusResponse;
 
-        public NestStatus(string jsonStatusResponse)
+        public NestAPIStatusResponse(string jsonStatusResponse)
         {
             this.jsonStatusResponse = JObject.Parse(jsonStatusResponse);
 

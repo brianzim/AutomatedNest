@@ -17,7 +17,7 @@ namespace AutomatedNest.UnofficialNestAPI
         private static string userAgent = "'Nest/2.1.3 CFNetwork/548.0.4'";
         private static string protocol_version = "1";
 
-        public static NestCredentials postLoginRequest(string username, string password)
+        public static NestAPICredentialsResponse postLoginRequest(string username, string password)
         {
 
             HttpWebRequest request = WebRequest.Create(loginURL) as HttpWebRequest;
@@ -32,7 +32,7 @@ namespace AutomatedNest.UnofficialNestAPI
                 writer.Write(WriteEncodedFormParameter("password", password));
             }
 
-            NestCredentials returnNestCredentials;
+            NestAPICredentialsResponse returnNestCredentials;
 
             try
             {
@@ -48,11 +48,11 @@ namespace AutomatedNest.UnofficialNestAPI
                     }
                 }
 
-                returnNestCredentials = JsonConvert.DeserializeObject<NestCredentials>(responseBody);
+                returnNestCredentials = JsonConvert.DeserializeObject<NestAPICredentialsResponse>(responseBody);
             }
             catch (Exception e)
             {
-                returnNestCredentials = new NestCredentials();
+                returnNestCredentials = new NestAPICredentialsResponse();
 
                 if (e.Message == "The remote server returned an error: (400) Bad Request.")
                 {
@@ -70,7 +70,7 @@ namespace AutomatedNest.UnofficialNestAPI
 
         }
 
-        public static NestForecastBase getForecast(NestCredentials credentials, string zip)
+        public static NestAPIForecastResponse getForecast(NestAPICredentialsResponse credentials, string zip)
         {
             string url = forecastURL + zip;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
@@ -93,10 +93,10 @@ namespace AutomatedNest.UnofficialNestAPI
 
             }
 
-            return JsonConvert.DeserializeObject<NestForecastBase>(responseBody);
+            return JsonConvert.DeserializeObject<NestAPIForecastResponse>(responseBody);
         }
 
-        public static NestStatus getNestStatus(NestCredentials credentials)
+        public static NestAPIStatusResponse getNestStatus(NestAPICredentialsResponse credentials)
         {
             string url = credentials.urls.transport_url + "/v2/mobile/" + credentials.user;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
@@ -118,10 +118,10 @@ namespace AutomatedNest.UnofficialNestAPI
                 }
             }
 
-            return new NestStatus(responseBody);
+            return new NestAPIStatusResponse(responseBody);
         }
 
-        public static NestAPISetTargetHumidityResponse setTargetHumidity(NestCredentials credentials, int newTargetHumidity)
+        public static NestAPISetTargetHumidityResponse setTargetHumidity(NestAPICredentialsResponse credentials, int newTargetHumidity)
         {
             NestAPISetTargetHumidityResponse response = new NestAPISetTargetHumidityResponse();
             response.ResponseResult = NestAPISetTargetHumidityResponse.ResponseResultOptions.ERROR;

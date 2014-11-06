@@ -10,26 +10,26 @@ namespace AutomatedNest.ThermostatManager
 {
     public static class ThermostatManager
     {
-        public static NestCredentials performLogin(string username, string password) 
+        public static NestAPICredentialsResponse performLogin(string username, string password) 
         {
             return UnofficialNestAPI.UnofficialNestAPI.postLoginRequest(username, password);
   
         }
 
-        public static OptimizeHumidityResult optimizeHumidity(NestCredentials credentials, HumidityMode mode)
+        public static OptimizeHumidityResult optimizeHumidity(NestAPICredentialsResponse credentials, HumidityMode mode)
         {
             OptimizeHumidityResult optimizeHumidityResult = new OptimizeHumidityResult();
 
             try
             {
-                NestStatus status = getStatus(credentials);
+                NestAPIStatusResponse status = getStatus(credentials);
                 optimizeHumidityResult.OldTargetHumidity = status.TargetHumidity;
 
                 // If no humidifier installed, fail as there's no point to doing anything more
                 if (status.HasHumidifier)
                 {
                     // Get forecast for location registered to Nest
-                    NestForecastBase forecast = ForecastManager.getForecast(credentials, status.PostalCode);
+                    NestAPIForecastResponse forecast = ForecastManager.getForecast(credentials, status.PostalCode);
                     optimizeHumidityResult.LowForecastTemperature = forecast.LowestForecastTemp;
 
                     // Calculate desired humidity based on forecast an mode of calculation
@@ -72,12 +72,12 @@ namespace AutomatedNest.ThermostatManager
 
         }
 
-        private static NestAPISetTargetHumidityResponse setHumidity(NestCredentials credentials, int newTargetHumidity)
+        private static NestAPISetTargetHumidityResponse setHumidity(NestAPICredentialsResponse credentials, int newTargetHumidity)
         {
             return UnofficialNestAPI.UnofficialNestAPI.setTargetHumidity(credentials, newTargetHumidity);
         }
 
-        public static NestStatus getStatus(NestCredentials credentials)
+        public static NestAPIStatusResponse getStatus(NestAPICredentialsResponse credentials)
         {
             return UnofficialNestAPI.UnofficialNestAPI.getNestStatus(credentials);
         }

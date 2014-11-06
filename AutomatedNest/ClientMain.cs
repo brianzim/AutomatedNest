@@ -19,7 +19,7 @@ namespace AutomatedNest
 {
     public partial class ClientMain : Form
     {
-        NestCredentials credentials;
+        NestAPICredentialsResponse credentials;
 
         public ClientMain()
         {

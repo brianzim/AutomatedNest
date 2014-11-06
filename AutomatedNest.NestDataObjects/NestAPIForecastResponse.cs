@@ -45,14 +45,14 @@ namespace AutomatedNest.NestDataObjects
 
     }
     
-    public class NestForecastBase
+    public class NestAPIForecastResponse
     {
         public string display_city { get; set; }
         public string city { get; set; }
         public NestNowForecast now { get; set; }
         public NestFutureForecast forecast { get; set; }
 
-        public NestForecastBase()
+        public NestAPIForecastResponse()
         {
 
         }
