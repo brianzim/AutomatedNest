@@ -108,6 +108,8 @@
             this.StatusWindow.Location = new System.Drawing.Point(13, 218);
             this.StatusWindow.Multiline = true;
             this.StatusWindow.Name = "StatusWindow";
+            this.StatusWindow.ReadOnly = true;
+            this.StatusWindow.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.StatusWindow.Size = new System.Drawing.Size(606, 286);
             this.StatusWindow.TabIndex = 6;
             // 

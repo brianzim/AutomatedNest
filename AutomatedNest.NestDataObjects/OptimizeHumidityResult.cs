@@ -53,7 +53,7 @@ namespace AutomatedNest.NestDataObjects
                 else if (OperationResult == OperationResultOptions.CHANGE_SUCCEEDED)
                     return "Lowest forecast temperature is " + LowForecastTemperature+ ".  Target humidity successfuly changed from " + OldTargetHumidity + "% to " + NewTargetHumidity + "%";
                 else if (OperationResult == OperationResultOptions.NO_CHANGE_NEEDED)
-                    return "Lowest forecast temperature is " + LowForecastTemperature + ".  Target humidity remains set at: " + OldTargetHumidity;
+                    return "Lowest forecast temperature is " + LowForecastTemperature + ".  Target humidity remains set at: " + OldTargetHumidity + "%";
 
                 return "Error in determining status";
             }

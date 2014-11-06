@@ -90,8 +90,8 @@ namespace AutomatedNest
 
         private void logStatus(string status)
         {
-
-            StatusWindow.AppendText(DateTime.Now + ":" + status + "\n");
+            StatusWindow.Text = DateTime.Now + ":" + status + Environment.NewLine + StatusWindow.Text;
+            StatusWindow.Select(0, 0);
         }
 
         private void systemRunning(bool mode)
