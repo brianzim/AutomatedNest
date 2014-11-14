@@ -13,7 +13,8 @@ namespace AutomatedNest.ThermostatManager
     {
         public static NestAPIForecastResponse getForecast(NestAPICredentialsResponse credentials, string zip)
         {
-            return UnofficialNestAPI.UnofficialNestAPI.getForecast(credentials, zip);
+            UnofficialNestAPI.UnofficialNestAPI unapi = new UnofficialNestAPI.UnofficialNestAPI();
+            return unapi.getForecast(credentials, zip);
         }
 
         public static int calculateTargetHumidity(NestAPIForecastResponse forecast, HumidityMode mode)

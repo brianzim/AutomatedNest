@@ -10,14 +10,15 @@ using Newtonsoft.Json;
 
 namespace AutomatedNest.UnofficialNestAPI
 {
-    public static class UnofficialNestAPI
+    public class UnofficialNestAPI : IUnofficialNestAPI
     {
         private static string loginURL = "https://home.nest.com/user/login";
         private static string forecastURL = "https://home.nest.com/api/0.1/weather/forecast/";
+        private static string deviceURL = "/v2/put/device";
         private static string userAgent = "'Nest/2.1.3 CFNetwork/548.0.4'";
         private static string protocol_version = "1";
 
-        public static NestAPICredentialsResponse postLoginRequest(string username, string password)
+        public NestAPICredentialsResponse postLoginRequest(string username, string password)
         {
 
             HttpWebRequest request = WebRequest.Create(loginURL) as HttpWebRequest;
@@ -70,7 +71,7 @@ namespace AutomatedNest.UnofficialNestAPI
 
         }
 
-        public static NestAPIForecastResponse getForecast(NestAPICredentialsResponse credentials, string zip)
+        public NestAPIForecastResponse getForecast(NestAPICredentialsResponse credentials, string zip)
         {
             string url = forecastURL + zip;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
@@ -96,12 +97,14 @@ namespace AutomatedNest.UnofficialNestAPI
             return JsonConvert.DeserializeObject<NestAPIForecastResponse>(responseBody);
         }
 
-        public static NestAPIStatusResponse getNestStatus(NestAPICredentialsResponse credentials)
+        public NestAPIStatusResponse getNestStatus(NestAPICredentialsResponse credentials)
         {
             string url = credentials.urls.transport_url + "/v2/mobile/" + credentials.user;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             request.Method = "GET";
             request.UserAgent = userAgent;
+            request.ContentType = "application/x-www-form-urlencoded";
+
             request.Headers.Add("X-nl-protocol-version", protocol_version);
             request.Headers.Add("X-nl-user-d", credentials.userid);
             string auth = "Basic " + credentials.access_token;
@@ -121,22 +124,58 @@ namespace AutomatedNest.UnofficialNestAPI
             return new NestAPIStatusResponse(responseBody);
         }
 
-        public static NestAPISetTargetHumidityResponse setTargetHumidity(NestAPICredentialsResponse credentials, int newTargetHumidity)
+        public NestAPISetTargetHumidityResponse setTargetHumidity(NestAPICredentialsResponse credentials, NestAPIStatusResponse status, int newTargetHumidity)
         {
-            NestAPISetTargetHumidityResponse response = new NestAPISetTargetHumidityResponse();
-            response.ResponseResult = NestAPISetTargetHumidityResponse.ResponseResultOptions.ERROR;
-            response.ErrorMessage = "API Not Implemented.";
-            return response;
+            NestAPISetTargetHumidityResponse returnResponse = new NestAPISetTargetHumidityResponse();
+
+            HttpWebRequest request = WebRequest.Create(credentials.urls.transport_url + deviceURL + "." + status.SerialNumber.ToString()) as HttpWebRequest;
+            request.Method = "POST";
+            request.UserAgent = userAgent;
+            request.ContentType = "text/json";
+
+            request.Headers.Add("X-nl-protocol-version", protocol_version);
+            request.Headers.Add("X-nl-user-d", credentials.userid);
+            string auth = "Basic " + credentials.access_token;
+            request.Headers.Add("Authorization", auth);
+
+            string json = "{\"target_humidity\" : " + newTargetHumidity.ToString() + "}";
+
+            using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
+            {
+                writer.Write(json);
+            }
+
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                if (response.StatusDescription.Equals("OK"))
+                {
+                    returnResponse.ResponseResult = NestAPISetTargetHumidityResponse.ResponseResultOptions.SUCCESS;
+                }
+                else
+                {
+                    returnResponse.ResponseResult = NestAPISetTargetHumidityResponse.ResponseResultOptions.ERROR;
+                    returnResponse.ErrorMessage = response.StatusDescription;
+                }
+            }
+            catch (Exception e)
+            {
+                returnResponse.ResponseResult = NestAPISetTargetHumidityResponse.ResponseResultOptions.ERROR;
+                returnResponse.ErrorMessage = e.Message;
+            }
+
+            return returnResponse;
         }
 
-        public static string getAPI(string url) { return null;  }
+        public string getAPI(string url) { return null;  }
 
-        private static string WriteEncodedFormParameter(string key, string value)
+        private string WriteEncodedFormParameter(string key, string value)
         {
             return WriteEncodedFormParameter(key, value, false);
         }
 
-        private static string WriteEncodedFormParameter(string key, string value, bool isUrl)
+        private string WriteEncodedFormParameter(string key, string value, bool isUrl)
         {
             var encoded = string.Format("{0}={1}", Uri.EscapeUriString(key), Uri.EscapeUriString(value));
             return (isUrl ? encoded.Replace("%20", "+") : encoded);

@@ -14,15 +14,21 @@ using System.IO;
 using AutomatedNest.ThermostatManager;
 using AutomatedNest.NestDataObjects;
 using AutomatedNest.ThermostatEngines;
+using Microsoft.Practices.Unity;
+using AutomatedNest.UnofficialNestAPI;
 
 namespace AutomatedNest
 {
     public partial class ClientMain : Form
     {
         NestAPICredentialsResponse credentials;
+        UnityContainer container;
 
         public ClientMain()
         {
+            container = new UnityContainer();
+            container.RegisterType<IUnofficialNestAPI, UnofficialNestAPI.UnofficialNestAPI>();
+
             InitializeComponent();
 
             HumidityComboBox.DataSource = Enum.GetValues(typeof(HumidityMode))
