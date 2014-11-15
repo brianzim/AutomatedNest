@@ -9,14 +9,17 @@ using Microsoft.Practices.Unity;
 
 namespace AutomatedNest.ThermostatManager
 {
-    public static class ThermostatManager
+    public class ThermostatManager : ManagerBase
     {
-        public static NestAPICredentialsResponse performLogin(string username, string password) 
+        public NestAPICredentialsResponse performLogin(string username, string password) 
         {
-            var container = new UnityContainer();
-            container.RegisterType<IUnofficialNestAPI, UnofficialNestAPI.UnofficialNestAPI>();
+            //var container = new UnityContainer();
+            //container.RegisterType<IUnofficialNestAPI, UnofficialNestAPI.UnofficialNestAPI>();
             //container.RegisterType<IUnofficialNestAPI, UnofficialNestAPI.TestUnofficialNestAPI>();
-            var nestapi = container.Resolve<IUnofficialNestAPI>();
+            //var nestapi = container.Resolve<IUnofficialNestAPI>();
+            
+            var nestapi = AccessorFactory.Create<IUnofficialNestAPI>();
+
             return nestapi.postLoginRequest(username, password);
   
         }

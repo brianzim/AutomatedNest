@@ -51,8 +51,24 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Mocks\MockAccessorFactory.cs" />
+    <Compile Include="Mocks\MockUnofficialNestAPI.cs" />
+    <Compile Include="LoginTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutomatedNest.NestDataObjects\AutomatedNest.NestDataObjects.csproj">
+      <Project>{8a8005d9-24e3-4907-bdd9-66836abc7ee4}</Project>
+      <Name>AutomatedNest.NestDataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutomatedNest.ThermostatManager\AutomatedNest.ThermostatManager.csproj">
+      <Project>{f311f784-7d7a-4cf9-8d73-02f0610d18e0}</Project>
+      <Name>AutomatedNest.ThermostatManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutomatedNest.UnofficialNestAPI\AutomatedNest.UnofficialNestAPI.csproj">
+      <Project>{683ab04a-205b-4ffc-9d4f-731273310eb8}</Project>
+      <Name>AutomatedNest.UnofficialNestAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

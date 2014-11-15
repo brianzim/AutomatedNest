@@ -52,7 +52,8 @@ namespace AutomatedNest
             }
             else
             {
-                credentials = ThermostatManager.ThermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
+                ThermostatManager.ThermostatManager manager = new ThermostatManager.ThermostatManager();
+                credentials = manager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
 
                 if (credentials.success)
                 {

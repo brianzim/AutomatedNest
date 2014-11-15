@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IUnofficialNestAPI.cs" />
-    <Compile Include="TestUnofficialNestAPI.cs" />
     <Compile Include="UnofficialNestAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -7,7 +7,7 @@ using AutomatedNest.NestDataObjects;
 
 namespace AutomatedNest.UnofficialNestAPI
 {
-    public class TestUnofficialNestAPI : IUnofficialNestAPI
+    public class MockUnofficialNestAPI : IUnofficialNestAPI
     {
         public NestAPICredentialsResponse postLoginRequest(string username, string password)
         {
@@ -18,7 +18,6 @@ namespace AutomatedNest.UnofficialNestAPI
                 response.access_token = "abcdefghijklmnopqrstuvwxyz1234567890";
                 response.email = "test@email.com";
                 response.expires_in = DateTime.Now;
-                response.urls.transport_url = "";
                 response.user = "test.0000";
                 response.userid = "test";
             }
