@@ -21,23 +21,22 @@ namespace AutomatedNest.UnofficialNestAPI
 
         public NestAPICredentialsResponse postLoginRequest(string username, string password)
         {
+            NestAPICredentialsResponse returnNestCredentials;
 
             HttpWebRequest request = WebRequest.Create(loginURL) as HttpWebRequest;
             request.Method = "POST";
             request.UserAgent = userAgent;
             request.ContentType = "application/x-www-form-urlencoded";
 
-            using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
-            {
-                writer.Write(WriteEncodedFormParameter("username", username));
-                writer.Write("&");
-                writer.Write(WriteEncodedFormParameter("password", password));
-            }
-
-            NestAPICredentialsResponse returnNestCredentials;
-
             try
             {
+
+                using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
+                {
+                    writer.Write(WriteEncodedFormParameter("username", username));
+                    writer.Write("&");
+                    writer.Write(WriteEncodedFormParameter("password", password));
+                }
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 string responseBody;

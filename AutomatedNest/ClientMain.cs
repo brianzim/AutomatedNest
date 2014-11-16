@@ -47,19 +47,8 @@ namespace AutomatedNest
             }
             else
             {
-                ThermostatManager.ThermostatManager manager = new ThermostatManager.ThermostatManager();
-                credentials = manager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
+                systemRunning(true);
 
-                if (credentials.success)
-                {
-                    logStatus("Successful login by " + credentials.email);
-                    systemRunning(true);
-
-                }
-                else
-                {
-                    MessageBox.Show(credentials.error, "Failed to Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
         }
  
@@ -93,9 +82,21 @@ namespace AutomatedNest
 
         private void OptimizeAction()
         {
-            ThermostatManager.ThermostatManager thermostatmanager = new ThermostatManager.ThermostatManager();
-            OptimizeHumidityResult result = thermostatmanager.optimizeHumidity(credentials, (HumidityMode)HumidityComboBox.SelectedValue);
-            logStatus(result.OperationStatus);
+            ThermostatManager.ThermostatManager thermostatManager = new ThermostatManager.ThermostatManager();
+
+            credentials = thermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
+
+            if (credentials.success)
+            {
+                logStatus("Credentials validated for: " + credentials.email);
+                OptimizeHumidityResult result = thermostatManager.optimizeHumidity(credentials, (HumidityMode)HumidityComboBox.SelectedValue);
+                logStatus(result.OperationStatus);
+            }
+            else
+            {
+                logStatus(credentials.error);
+            }
+            
         }
 
         private void UpdateScheduledUpdateTime()
@@ -115,6 +116,8 @@ namespace AutomatedNest
         {
             if (mode)
             {
+                logStatus("Humidity management has started.");
+
                 txtUserName.ReadOnly = true;
                 txtPassword.ReadOnly = true;
                 StartManagingButton.Enabled = false;
@@ -134,6 +137,8 @@ namespace AutomatedNest
             }
             else
             {
+                logStatus("Humidity management has stopped.");
+
                 txtUserName.ReadOnly = false;
                 txtPassword.ReadOnly = false;
 
@@ -150,7 +155,6 @@ namespace AutomatedNest
         private void StopManagingButton_Click(object sender, EventArgs e)
         {
             systemRunning(false);
-            logStatus("Monitoring Stopped");
         }
  
     }
