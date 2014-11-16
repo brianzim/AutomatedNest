@@ -44,6 +44,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.IntervalComboBox = new System.Windows.Forms.ComboBox();
             this.HumidityComboBox = new System.Windows.Forms.ComboBox();
+            this.lblNexScheduledUpdate = new System.Windows.Forms.Label();
+            this.lblSchedueledUpdateTime = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // StartManagingButton
@@ -105,7 +107,7 @@
             // 
             // StatusWindow
             // 
-            this.StatusWindow.Location = new System.Drawing.Point(13, 218);
+            this.StatusWindow.Location = new System.Drawing.Point(13, 261);
             this.StatusWindow.Multiline = true;
             this.StatusWindow.Name = "StatusWindow";
             this.StatusWindow.ReadOnly = true;
@@ -116,7 +118,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 194);
+            this.label3.Location = new System.Drawing.Point(10, 237);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(79, 13);
             this.label3.TabIndex = 7;
@@ -147,18 +149,19 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(74, 154);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(94, 13);
+            this.label5.Size = new System.Drawing.Size(91, 13);
             this.label5.TabIndex = 11;
-            this.label5.Text = "Interval Time (sec)";
+            this.label5.Text = "Interval Time (hrs)";
             // 
             // IntervalComboBox
             // 
             this.IntervalComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.IntervalComboBox.FormattingEnabled = true;
             this.IntervalComboBox.Items.AddRange(new object[] {
-            "10",
-            "20",
-            "30"});
+            "1",
+            "6",
+            "12",
+            "24"});
             this.IntervalComboBox.Location = new System.Drawing.Point(188, 146);
             this.IntervalComboBox.Name = "IntervalComboBox";
             this.IntervalComboBox.Size = new System.Drawing.Size(189, 21);
@@ -174,11 +177,31 @@
             this.HumidityComboBox.Size = new System.Drawing.Size(189, 21);
             this.HumidityComboBox.TabIndex = 8;
             // 
+            // lblNexScheduledUpdate
+            // 
+            this.lblNexScheduledUpdate.AutoSize = true;
+            this.lblNexScheduledUpdate.Location = new System.Drawing.Point(44, 188);
+            this.lblNexScheduledUpdate.Name = "lblNexScheduledUpdate";
+            this.lblNexScheduledUpdate.Size = new System.Drawing.Size(124, 13);
+            this.lblNexScheduledUpdate.TabIndex = 13;
+            this.lblNexScheduledUpdate.Text = "Next Scheduled Update:";
+            // 
+            // lblSchedueledUpdateTime
+            // 
+            this.lblSchedueledUpdateTime.AutoSize = true;
+            this.lblSchedueledUpdateTime.Location = new System.Drawing.Point(185, 188);
+            this.lblSchedueledUpdateTime.Name = "lblSchedueledUpdateTime";
+            this.lblSchedueledUpdateTime.Size = new System.Drawing.Size(37, 13);
+            this.lblSchedueledUpdateTime.TabIndex = 14;
+            this.lblSchedueledUpdateTime.Text = "(none)";
+            // 
             // ClientMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(631, 508);
+            this.ClientSize = new System.Drawing.Size(631, 550);
+            this.Controls.Add(this.lblSchedueledUpdateTime);
+            this.Controls.Add(this.lblNexScheduledUpdate);
             this.Controls.Add(this.IntervalComboBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.StopManagingButton);
@@ -216,6 +239,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox IntervalComboBox;
         private System.Windows.Forms.ComboBox HumidityComboBox;
+        private System.Windows.Forms.Label lblNexScheduledUpdate;
+        private System.Windows.Forms.Label lblSchedueledUpdateTime;
     }
 }
 

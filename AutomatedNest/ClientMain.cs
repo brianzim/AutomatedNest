@@ -14,7 +14,6 @@ using System.IO;
 using AutomatedNest.ThermostatManager;
 using AutomatedNest.NestDataObjects;
 using AutomatedNest.ThermostatEngines;
-using Microsoft.Practices.Unity;
 using AutomatedNest.UnofficialNestAPI;
 
 namespace AutomatedNest
@@ -22,13 +21,9 @@ namespace AutomatedNest
     public partial class ClientMain : Form
     {
         NestAPICredentialsResponse credentials;
-        UnityContainer container;
 
         public ClientMain()
         {
-            container = new UnityContainer();
-            container.RegisterType<IUnofficialNestAPI, UnofficialNestAPI.UnofficialNestAPI>();
-
             InitializeComponent();
 
             HumidityComboBox.DataSource = Enum.GetValues(typeof(HumidityMode))
@@ -91,8 +86,22 @@ namespace AutomatedNest
 
         private void MainTimer_Tick(object sender, EventArgs e)
         {
+            UpdateScheduledUpdateTime();
+            OptimizeAction();
+            
+        }
+
+        private void OptimizeAction()
+        {
             OptimizeHumidityResult result = ThermostatManager.ThermostatManager.optimizeHumidity(credentials, (HumidityMode)HumidityComboBox.SelectedValue);
             logStatus(result.OperationStatus);
+        }
+
+        private void UpdateScheduledUpdateTime()
+        {
+            int interval;
+            int.TryParse(IntervalComboBox.SelectedItem.ToString(), out interval);
+            lblSchedueledUpdateTime.Text = DateTime.Now.AddHours(interval).ToString();
         }
 
         private void logStatus(string status)
@@ -114,11 +123,13 @@ namespace AutomatedNest
                 IntervalComboBox.Enabled = false;
 
                 int interval;
-
                 int.TryParse(IntervalComboBox.SelectedItem.ToString(), out interval);
 
-                MainTimer.Interval = 1000 * interval;
+                MainTimer.Interval = 1000 * 60 * 60 * interval;
                 MainTimer.Start();
+
+                UpdateScheduledUpdateTime();
+                OptimizeAction();
             }
             else
             {
