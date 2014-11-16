@@ -63,6 +63,14 @@ namespace AutomatedNest.NestDataObjects
             {
                 int returnValue = 200;
 
+                int currentTemp;
+                int.TryParse(now.current_temperature, out currentTemp);
+
+                if(currentTemp < returnValue)
+                {
+                    returnValue = currentTemp;
+                }
+
                 // Find lowest value for hourly forecasts
                 foreach(NestHourlyForecast nhf in forecast.hourly)
                 {

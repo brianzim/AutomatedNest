@@ -7,8 +7,8 @@
     <ProjectGuid>{8A8005D9-24E3-4907-BDD9-66836ABC7EE4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NestDataObjects</RootNamespace>
-    <AssemblyName>NestDataObjects</AssemblyName>
+    <RootNamespace>AutomatedNest.NestDataObjects</RootNamespace>
+    <AssemblyName>AutomatedNest.NestDataObjects</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

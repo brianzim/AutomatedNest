@@ -3,19 +3,19 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AutomatedNest.ThermostatManager;
 using AutomatedNest.UnofficialNestAPI;
 
-namespace ConnectivityUnitTests
+namespace AutomatedNest.UnitTests
 {
     [TestClass]
     public class LoginTests
     {
         string correctUserName = "abc123";
         string correctPassword = "xyz987";
-        private ThermostatManager SetupThermostatManager()
+        private AutomatedNest.ThermostatManager.ThermostatManager SetupThermostatManager()
         {
             var factory = new MockAccessorFactory();
             factory.AddOverride<IUnofficialNestAPI>(new MockUnofficialNestAPI());
 
-            var thermostatManager = new ThermostatManager();
+            var thermostatManager = new AutomatedNest.ThermostatManager.ThermostatManager();
             thermostatManager.AccessorFactory = factory;
 
             return thermostatManager;

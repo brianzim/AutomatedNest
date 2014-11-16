@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedNest.UnofficialNes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedNest.NestDataObjects", "AutomatedNest.NestDataObjects\AutomatedNest.NestDataObjects.csproj", "{8A8005D9-24E3-4907-BDD9-66836ABC7EE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "AutomatedNest.UnitTests\UnitTests.csproj", "{451BF83C-A5E2-46F4-B757-2E7030563284}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedNest.UnitTests", "AutomatedNest.UnitTests\AutomatedNest.UnitTests.csproj", "{451BF83C-A5E2-46F4-B757-2E7030563284}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

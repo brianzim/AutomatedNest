@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutomatedNest.ThermostatManager;
 
-namespace ConnectivityUnitTests
+namespace AutomatedNest.UnitTests
 {
     public class MockAccessorFactory : AccessorFactory
     {
