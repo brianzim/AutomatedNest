@@ -6,7 +6,7 @@ using AutomatedNest.UnofficialNestAPI;
 namespace AutomatedNest.UnitTests
 {
     [TestClass]
-    public class LoginTests
+    public class IntegrationTests
     {
         string correctUserName = "abc123";
         string correctPassword = "xyz987";
@@ -21,12 +21,21 @@ namespace AutomatedNest.UnitTests
             return thermostatManager;
         }
 
+        private AutomatedNest.ThermostatManager.ThermostatManager SetupThermostatManagerNoHumidifier()
+        {
+            var factory = new MockAccessorFactory();
+            factory.AddOverride<IUnofficialNestAPI>(new MockUnofficialNestAPINoHumidifier());
+
+            var thermostatManager = new AutomatedNest.ThermostatManager.ThermostatManager();
+            thermostatManager.AccessorFactory = factory;
+
+            return thermostatManager;
+        }
+
         [TestMethod]
         public void SuccessfulLogin()
         {
             var thermostatManager = SetupThermostatManager();
-
-            var mockUnofficialNestAPI = new MockUnofficialNestAPI();
 
             AutomatedNest.NestDataObjects.NestAPICredentialsResponse response = thermostatManager.performLogin(correctUserName, correctPassword);
 
@@ -38,8 +47,6 @@ namespace AutomatedNest.UnitTests
         {
             var thermostatManager = SetupThermostatManager();
 
-            var mockUnofficialNestAPI = new MockUnofficialNestAPI();
-
             AutomatedNest.NestDataObjects.NestAPICredentialsResponse response = thermostatManager.performLogin("a", correctPassword);
 
             Assert.AreEqual(false, response.success);
@@ -50,15 +57,33 @@ namespace AutomatedNest.UnitTests
         {
             var thermostatManager = SetupThermostatManager();
 
-            var mockUnofficialNestAPI = new MockUnofficialNestAPI();
-
             AutomatedNest.NestDataObjects.NestAPICredentialsResponse response = thermostatManager.performLogin(correctUserName, "a");
 
             Assert.AreEqual(false, response.success);
         }
 
+        [TestMethod]
+        public void OptimizeHumidityChangeSuccessful()
+        {
+            var thermostatManager = SetupThermostatManager();
 
+            NestDataObjects.OptimizeHumidityResult result = thermostatManager.optimizeHumidity(new NestDataObjects.NestAPICredentialsResponse(), NestDataObjects.HumidityMode.Conservative);
 
+            Assert.AreEqual(NestDataObjects.OptimizeHumidityResult.OperationResultOptions.CHANGE_SUCCEEDED, result.OperationResult);
+            Assert.AreEqual(10, result.NewTargetHumidity);
+            Assert.AreEqual(40, result.OldTargetHumidity);
+            Assert.AreEqual(0, result.LowForecastTemperature); 
+        }
 
+        [TestMethod]
+        public void OptimizeHumidityNoHumidifier()
+        {
+            var thermostatManager = SetupThermostatManagerNoHumidifier();
+
+            NestDataObjects.OptimizeHumidityResult result = thermostatManager.optimizeHumidity(new NestDataObjects.NestAPICredentialsResponse(), NestDataObjects.HumidityMode.Conservative);
+
+            Assert.AreEqual(NestDataObjects.OptimizeHumidityResult.OperationResultOptions.ERROR, result.OperationResult);
+
+        }
     }
 }

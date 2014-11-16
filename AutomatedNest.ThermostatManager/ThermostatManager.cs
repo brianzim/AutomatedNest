@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using AutomatedNest.NestDataObjects;
 using AutomatedNest.UnofficialNestAPI;
-using Microsoft.Practices.Unity;
 
 namespace AutomatedNest.ThermostatManager
 {
@@ -13,18 +12,11 @@ namespace AutomatedNest.ThermostatManager
     {
         public NestAPICredentialsResponse performLogin(string username, string password) 
         {
-            //var container = new UnityContainer();
-            //container.RegisterType<IUnofficialNestAPI, UnofficialNestAPI.UnofficialNestAPI>();
-            //container.RegisterType<IUnofficialNestAPI, UnofficialNestAPI.TestUnofficialNestAPI>();
-            //var nestapi = container.Resolve<IUnofficialNestAPI>();
-            
             var nestapi = AccessorFactory.Create<IUnofficialNestAPI>();
-
-            return nestapi.postLoginRequest(username, password);
-  
+            return nestapi.postLoginRequest(username, password); 
         }
 
-        public static OptimizeHumidityResult optimizeHumidity(NestAPICredentialsResponse credentials, HumidityMode mode)
+        public OptimizeHumidityResult optimizeHumidity(NestAPICredentialsResponse credentials, HumidityMode mode)
         {
             OptimizeHumidityResult optimizeHumidityResult = new OptimizeHumidityResult();
 
@@ -37,17 +29,19 @@ namespace AutomatedNest.ThermostatManager
                 if (status.HasHumidifier)
                 {
                     // Get forecast for location registered to Nest
-                    NestAPIForecastResponse forecast = ForecastManager.getForecast(credentials, status.PostalCode);
+                    ForecastManager forecastManager = new ForecastManager();
+                    forecastManager.AccessorFactory = this.AccessorFactory;
+                    NestAPIForecastResponse forecast = forecastManager.getForecast(credentials, status.PostalCode);
                     optimizeHumidityResult.LowForecastTemperature = forecast.LowestForecastTemp;
 
                     // Calculate desired humidity based on forecast an mode of calculation
-                    optimizeHumidityResult.NewTargetHumidity = ForecastManager.calculateTargetHumidity(forecast, mode);
+                    optimizeHumidityResult.NewTargetHumidity = forecastManager.calculateTargetHumidity(forecast, mode);
 
 
                     // Compre new target to current target.  Make change if needed.
                     if (status.TargetHumidity != optimizeHumidityResult.NewTargetHumidity)
                     {
-                        NestAPISetTargetHumidityResponse response = ThermostatManager.setHumidity(credentials, status, optimizeHumidityResult.NewTargetHumidity);
+                        NestAPISetTargetHumidityResponse response = setHumidity(credentials, status, optimizeHumidityResult.NewTargetHumidity);
                         if (response.ResponseResult == NestAPISetTargetHumidityResponse.ResponseResultOptions.SUCCESS)
                         {
                             optimizeHumidityResult.OperationResult = OptimizeHumidityResult.OperationResultOptions.CHANGE_SUCCEEDED;
@@ -79,16 +73,16 @@ namespace AutomatedNest.ThermostatManager
             return optimizeHumidityResult;
         }
 
-        private static NestAPISetTargetHumidityResponse setHumidity(NestAPICredentialsResponse credentials, NestAPIStatusResponse status, int newTargetHumidity)
+        private NestAPISetTargetHumidityResponse setHumidity(NestAPICredentialsResponse credentials, NestAPIStatusResponse status, int newTargetHumidity)
         {
-            UnofficialNestAPI.UnofficialNestAPI unapi = new UnofficialNestAPI.UnofficialNestAPI();
-            return unapi.setTargetHumidity(credentials, status, newTargetHumidity);
+            var nestapi = AccessorFactory.Create<IUnofficialNestAPI>();
+            return nestapi.setTargetHumidity(credentials, status, newTargetHumidity);
         }
 
-        public static NestAPIStatusResponse getStatus(NestAPICredentialsResponse credentials)
+        public NestAPIStatusResponse getStatus(NestAPICredentialsResponse credentials)
         {
-            UnofficialNestAPI.UnofficialNestAPI unapi = new UnofficialNestAPI.UnofficialNestAPI();
-            return unapi.getNestStatus(credentials);
+            var nestapi = AccessorFactory.Create<IUnofficialNestAPI>();
+            return nestapi.getNestStatus(credentials);
         }
     }
 }

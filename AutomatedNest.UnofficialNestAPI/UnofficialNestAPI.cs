@@ -7,6 +7,7 @@ using AutomatedNest.NestDataObjects;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AutomatedNest.UnofficialNestAPI
 {
@@ -121,7 +122,32 @@ namespace AutomatedNest.UnofficialNestAPI
                 }
             }
 
-            return new NestAPIStatusResponse(responseBody);
+            NestAPIStatusResponse statusResponse = new NestAPIStatusResponse();
+
+            try
+            {
+                JObject jsonResponse = JObject.Parse(responseBody);
+
+                JObject deviceobj = (JObject)jsonResponse["device"];
+                IList<string> propertyNames = deviceobj.Properties().Select(p => p.Name).ToList();
+                statusResponse.SerialNumber = propertyNames[0].ToString();
+
+                JObject structureobj = (JObject)jsonResponse["structure"];
+                IList<string> structpropertyNames = structureobj.Properties().Select(p => p.Name).ToList();
+                statusResponse.StructureGUID = structpropertyNames[0].ToString();
+
+                statusResponse.HasHumidifier = (bool)jsonResponse["device"][statusResponse.SerialNumber]["has_humidifier"];
+                statusResponse.TargetHumidity = (int)jsonResponse["device"][statusResponse.SerialNumber]["target_humidity"];
+                statusResponse.PostalCode = jsonResponse["structure"][statusResponse.StructureGUID]["postal_code"].ToString();
+                statusResponse.CurrentHumidity = jsonResponse["device"][statusResponse.SerialNumber]["current_humidity"].ToString();
+            }
+            catch (Exception e)
+            {
+
+            }
+
+
+            return statusResponse;
         }
 
         public NestAPISetTargetHumidityResponse setTargetHumidity(NestAPICredentialsResponse credentials, NestAPIStatusResponse status, int newTargetHumidity)

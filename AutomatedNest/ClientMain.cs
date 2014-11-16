@@ -93,7 +93,8 @@ namespace AutomatedNest
 
         private void OptimizeAction()
         {
-            OptimizeHumidityResult result = ThermostatManager.ThermostatManager.optimizeHumidity(credentials, (HumidityMode)HumidityComboBox.SelectedValue);
+            ThermostatManager.ThermostatManager thermostatmanager = new ThermostatManager.ThermostatManager();
+            OptimizeHumidityResult result = thermostatmanager.optimizeHumidity(credentials, (HumidityMode)HumidityComboBox.SelectedValue);
             logStatus(result.OperationStatus);
         }
 

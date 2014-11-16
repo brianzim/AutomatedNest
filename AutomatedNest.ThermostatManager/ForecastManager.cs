@@ -9,15 +9,15 @@ using AutomatedNest.ThermostatEngines;
 
 namespace AutomatedNest.ThermostatManager
 {
-    public static class ForecastManager
+    public class ForecastManager : ManagerBase
     {
-        public static NestAPIForecastResponse getForecast(NestAPICredentialsResponse credentials, string zip)
+        public NestAPIForecastResponse getForecast(NestAPICredentialsResponse credentials, string zip)
         {
-            UnofficialNestAPI.UnofficialNestAPI unapi = new UnofficialNestAPI.UnofficialNestAPI();
-            return unapi.getForecast(credentials, zip);
+            var nestapi = AccessorFactory.Create<IUnofficialNestAPI>();
+            return nestapi.getForecast(credentials, zip);
         }
 
-        public static int calculateTargetHumidity(NestAPIForecastResponse forecast, HumidityMode mode)
+        public int calculateTargetHumidity(NestAPIForecastResponse forecast, HumidityMode mode)
         {
             return ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, mode);
         }

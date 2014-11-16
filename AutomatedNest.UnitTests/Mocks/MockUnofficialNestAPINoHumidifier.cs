@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace AutomatedNest.UnofficialNestAPI
 {
-    public class MockUnofficialNestAPI : IUnofficialNestAPI
+    public class MockUnofficialNestAPINoHumidifier : IUnofficialNestAPI
     {
         public NestAPICredentialsResponse postLoginRequest(string username, string password)
         {
@@ -42,11 +42,11 @@ namespace AutomatedNest.UnofficialNestAPI
         {
             NestAPIStatusResponse response = new NestAPIStatusResponse();
             response.CurrentHumidity = "40";
-            response.HasHumidifier = true;
+            response.HasHumidifier = false;
             response.PostalCode = "XXXXX";
             response.SerialNumber = "XXXXXXXXX";
             response.StructureGUID = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
-            response.TargetHumidity = 40;
+            response.TargetHumidity = 25;
             return response;
         }
 
