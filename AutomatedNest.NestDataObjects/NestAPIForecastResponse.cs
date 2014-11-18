@@ -63,8 +63,12 @@ namespace AutomatedNest.NestDataObjects
             {
                 int returnValue = 200;
 
-                int currentTemp;
-                int.TryParse(now.current_temperature, out currentTemp);
+                double currentTempDecimal;
+                Double.TryParse(now.current_temperature, out currentTempDecimal);
+
+                currentTempDecimal = currentTempDecimal * (9.0 / 5.0) + 32;
+
+                int currentTemp = (int)currentTempDecimal;
 
                 if(currentTemp < returnValue)
                 {
