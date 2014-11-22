@@ -40,10 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ForecastManager.cs" />
     <Compile Include="ManagerBase.cs" />
     <Compile Include="AccessorFactory.cs" />
-    <Compile Include="ThermostatManager.cs" />
+    <Compile Include="HumidityManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

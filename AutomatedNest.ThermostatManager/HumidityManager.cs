@@ -8,11 +8,11 @@ using AutomatedNest.UnofficialNestAPI;
 
 namespace AutomatedNest.ThermostatManager
 {
-    public class ThermostatManager : ManagerBase
+    public class HumidityManager : ManagerBase
     {
         public NestAPICredentialsResponse performLogin(string username, string password) 
         {
-            var nestapi = AccessorFactory.Create<IUnofficialNestAPI>();
+            IThermostatAccessor nestapi = AccessorFactory.Create<IThermostatAccessor>();
             return nestapi.postLoginRequest(username, password); 
         }
 
@@ -29,14 +29,11 @@ namespace AutomatedNest.ThermostatManager
                 if (status.HasHumidifier)
                 {
                     // Get forecast for location registered to Nest
-                    ForecastManager forecastManager = new ForecastManager();
-                    forecastManager.AccessorFactory = this.AccessorFactory;
-                    NestAPIForecastResponse forecast = forecastManager.getForecast(credentials, status.PostalCode);
+                    NestAPIForecastResponse forecast = getForecast(credentials, status.PostalCode);
                     optimizeHumidityResult.LowForecastTemperature = forecast.LowestForecastTemp;
 
                     // Calculate desired humidity based on forecast an mode of calculation
-                    optimizeHumidityResult.NewTargetHumidity = forecastManager.calculateTargetHumidity(forecast, mode);
-
+                    optimizeHumidityResult.NewTargetHumidity = calculateTargetHumidity(forecast, mode);
 
                     // Compre new target to current target.  Make change if needed.
                     if (status.TargetHumidity != optimizeHumidityResult.NewTargetHumidity)
@@ -75,14 +72,25 @@ namespace AutomatedNest.ThermostatManager
 
         private NestAPISetTargetHumidityResponse setHumidity(NestAPICredentialsResponse credentials, NestAPIStatusResponse status, int newTargetHumidity)
         {
-            var nestapi = AccessorFactory.Create<IUnofficialNestAPI>();
+            var nestapi = AccessorFactory.Create<IThermostatAccessor>();
             return nestapi.setTargetHumidity(credentials, status, newTargetHumidity);
         }
 
         public NestAPIStatusResponse getStatus(NestAPICredentialsResponse credentials)
         {
-            var nestapi = AccessorFactory.Create<IUnofficialNestAPI>();
+            var nestapi = AccessorFactory.Create<IThermostatAccessor>();
             return nestapi.getNestStatus(credentials);
+        }
+
+        public NestAPIForecastResponse getForecast(NestAPICredentialsResponse credentials, string zip)
+        {
+            var nestapi = AccessorFactory.Create<IForecastAccessor>();
+            return nestapi.getForecast(credentials, zip);
+        }
+
+        public int calculateTargetHumidity(NestAPIForecastResponse forecast, HumidityMode mode)
+        {
+            return ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, mode);
         }
     }
 }

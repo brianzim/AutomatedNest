@@ -26,9 +26,9 @@ namespace AutomatedNest.UnitTests
            forecast.forecast.hourly = new System.Collections.Generic.List<NestHourlyForecast>();
            forecast.forecast.hourly.Add(nhf);
             
-           //Setup Now Attribute
+           //Setup Now Attribute (in deg C, all other values are in deg F.  21C = 70F.
            forecast.now = new NestNowForecast();
-           forecast.now.current_temperature = "50";
+           forecast.now.current_temperature = "21";
 
            return forecast;
 
@@ -40,55 +40,58 @@ namespace AutomatedNest.UnitTests
             NestAPIForecastResponse forecast = buildForecast();
             int targetHumidity;
 
-            forecast.now.current_temperature = "50";
+            NestHourlyForecast nhftest = new NestHourlyForecast();
+            nhftest.temp = 50;
+            forecast.forecast.hourly.Add(nhftest);
+
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(30, targetHumidity);
 
-            forecast.now.current_temperature = "40";
+            forecast.forecast.hourly[1].temp = 40;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(30, targetHumidity);
 
-            forecast.now.current_temperature = "39";
+            forecast.forecast.hourly[1].temp = 39;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(25, targetHumidity);
 
-            forecast.now.current_temperature = "30";
+            forecast.forecast.hourly[1].temp = 30;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(25, targetHumidity);
 
-            forecast.now.current_temperature = "29";
+            forecast.forecast.hourly[1].temp = 29;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(20, targetHumidity);
 
-            forecast.now.current_temperature = "20";
+            forecast.forecast.hourly[1].temp = 20;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(20, targetHumidity);
 
-            forecast.now.current_temperature = "19";
+            forecast.forecast.hourly[1].temp = 19;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(15, targetHumidity);
 
-            forecast.now.current_temperature = "10";
+            forecast.forecast.hourly[1].temp = 10;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(15, targetHumidity);
 
-            forecast.now.current_temperature = "9";
+            forecast.forecast.hourly[1].temp = 9;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(10, targetHumidity);
 
-            forecast.now.current_temperature = "0";
+            forecast.forecast.hourly[1].temp = 0;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(10, targetHumidity);
 
-            forecast.now.current_temperature = "-1";
+            forecast.forecast.hourly[1].temp = -1;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(10, targetHumidity);
 
-            forecast.now.current_temperature = "-10";
+            forecast.forecast.hourly[1].temp = -10;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(10, targetHumidity);
 
-            forecast.now.current_temperature = "-50";
+            forecast.forecast.hourly[1].temp = -50;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Conservative);
             Assert.AreEqual(10, targetHumidity);
         }
@@ -99,55 +102,59 @@ namespace AutomatedNest.UnitTests
             NestAPIForecastResponse forecast = buildForecast();
             int targetHumidity;
 
-            forecast.now.current_temperature = "50";
+            NestHourlyForecast nhftest = new NestHourlyForecast();
+            nhftest.temp = 50;
+            forecast.forecast.hourly.Add(nhftest);
+
+            forecast.forecast.hourly[1].temp = 50;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(45, targetHumidity);
 
-            forecast.now.current_temperature = "40";
+            forecast.forecast.hourly[1].temp = 40;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(45, targetHumidity);
 
-            forecast.now.current_temperature = "39";
+            forecast.forecast.hourly[1].temp = 39;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(40, targetHumidity);
 
-            forecast.now.current_temperature = "30";
+            forecast.forecast.hourly[1].temp = 30;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(40, targetHumidity);
 
-            forecast.now.current_temperature = "29";
+            forecast.forecast.hourly[1].temp = 29;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(35, targetHumidity);
 
-            forecast.now.current_temperature = "20";
+            forecast.forecast.hourly[1].temp = 20;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(35, targetHumidity);
 
-            forecast.now.current_temperature = "19";
+            forecast.forecast.hourly[1].temp = 19;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(30, targetHumidity);
 
-            forecast.now.current_temperature = "10";
+            forecast.forecast.hourly[1].temp = 10;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(30, targetHumidity);
 
-            forecast.now.current_temperature = "9";
+            forecast.forecast.hourly[1].temp = 9;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(25, targetHumidity);
 
-            forecast.now.current_temperature = "0";
+            forecast.forecast.hourly[1].temp = 0;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(25, targetHumidity);
 
-            forecast.now.current_temperature = "-1";
+            forecast.forecast.hourly[1].temp = -1;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(20, targetHumidity);
 
-            forecast.now.current_temperature = "-10";
+            forecast.forecast.hourly[1].temp = -10;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(20, targetHumidity);
 
-            forecast.now.current_temperature = "-50";
+            forecast.forecast.hourly[1].temp = -50;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Normal);
             Assert.AreEqual(15, targetHumidity);
         }
@@ -158,55 +165,59 @@ namespace AutomatedNest.UnitTests
             NestAPIForecastResponse forecast = buildForecast();
             int targetHumidity;
 
-            forecast.now.current_temperature = "50";
+            NestHourlyForecast nhftest = new NestHourlyForecast();
+            nhftest.temp = 50;
+            forecast.forecast.hourly.Add(nhftest);
+
+            forecast.forecast.hourly[1].temp = 50;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(45, targetHumidity);
 
-            forecast.now.current_temperature = "40";
+            forecast.forecast.hourly[1].temp = 40;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(45, targetHumidity);
 
-            forecast.now.current_temperature = "39";
+            forecast.forecast.hourly[1].temp = 39;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(45, targetHumidity);
 
-            forecast.now.current_temperature = "30";
+            forecast.forecast.hourly[1].temp = 30;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(45, targetHumidity);
 
-            forecast.now.current_temperature = "29";
+            forecast.forecast.hourly[1].temp = 29;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(45, targetHumidity);
 
-            forecast.now.current_temperature = "20";
+            forecast.forecast.hourly[1].temp = 20;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(45, targetHumidity);
 
-            forecast.now.current_temperature = "19";
+            forecast.forecast.hourly[1].temp = 19;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(40, targetHumidity);
 
-            forecast.now.current_temperature = "10";
+            forecast.forecast.hourly[1].temp = 10;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(40, targetHumidity);
 
-            forecast.now.current_temperature = "9";
+            forecast.forecast.hourly[1].temp = 9;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(35, targetHumidity);
 
-            forecast.now.current_temperature = "0";
+            forecast.forecast.hourly[1].temp = 0;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(35, targetHumidity);
 
-            forecast.now.current_temperature = "-1";
+            forecast.forecast.hourly[1].temp = -1;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(30, targetHumidity);
 
-            forecast.now.current_temperature = "-10";
+            forecast.forecast.hourly[1].temp = -10;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(30, targetHumidity);
 
-            forecast.now.current_temperature = "-50";
+            forecast.forecast.hourly[1].temp = -50;
             targetHumidity = ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, HumidityMode.Aggressive);
             Assert.AreEqual(25, targetHumidity);
         }

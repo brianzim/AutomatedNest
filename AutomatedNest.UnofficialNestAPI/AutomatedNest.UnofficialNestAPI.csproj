@@ -44,8 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUnofficialNestAPI.cs" />
-    <Compile Include="UnofficialNestAPI.cs" />
+    <Compile Include="ForecastAccessor.cs" />
+    <Compile Include="IForecastAccessor.cs" />
+    <Compile Include="IThermostatAccessor.cs" />
+    <Compile Include="ThermostatAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

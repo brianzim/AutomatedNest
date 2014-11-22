@@ -10,23 +10,25 @@ namespace AutomatedNest.UnitTests
     {
         string correctUserName = "abc123";
         string correctPassword = "xyz987";
-        private AutomatedNest.ThermostatManager.ThermostatManager SetupThermostatManager()
+        private AutomatedNest.ThermostatManager.HumidityManager SetupThermostatManager()
         {
             var factory = new MockAccessorFactory();
-            factory.AddOverride<IUnofficialNestAPI>(new MockUnofficialNestAPI());
+            factory.AddOverride<IThermostatAccessor>(new MockThermostatAccessor());
+            factory.AddOverride<IForecastAccessor>(new MockForecastAccessor());
 
-            var thermostatManager = new AutomatedNest.ThermostatManager.ThermostatManager();
+            var thermostatManager = new AutomatedNest.ThermostatManager.HumidityManager();
             thermostatManager.AccessorFactory = factory;
 
             return thermostatManager;
         }
 
-        private AutomatedNest.ThermostatManager.ThermostatManager SetupThermostatManagerNoHumidifier()
+        private AutomatedNest.ThermostatManager.HumidityManager SetupThermostatManagerNoHumidifier()
         {
             var factory = new MockAccessorFactory();
-            factory.AddOverride<IUnofficialNestAPI>(new MockUnofficialNestAPINoHumidifier());
+            factory.AddOverride<IThermostatAccessor>(new MockThermostatAccessorNoHumidifier());
+            factory.AddOverride<IForecastAccessor>(new MockForecastAccessor());
 
-            var thermostatManager = new AutomatedNest.ThermostatManager.ThermostatManager();
+            var thermostatManager = new AutomatedNest.ThermostatManager.HumidityManager();
             thermostatManager.AccessorFactory = factory;
 
             return thermostatManager;
@@ -72,7 +74,7 @@ namespace AutomatedNest.UnitTests
             Assert.AreEqual(NestDataObjects.OptimizeHumidityResult.OperationResultOptions.CHANGE_SUCCEEDED, result.OperationResult);
             Assert.AreEqual(10, result.NewTargetHumidity);
             Assert.AreEqual(40, result.OldTargetHumidity);
-            Assert.AreEqual(0, result.LowForecastTemperature); 
+            Assert.AreEqual(8, result.LowForecastTemperature); 
         }
 
         [TestMethod]

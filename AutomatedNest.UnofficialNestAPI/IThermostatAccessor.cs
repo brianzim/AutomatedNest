@@ -7,11 +7,9 @@ using AutomatedNest.NestDataObjects;
 
 namespace AutomatedNest.UnofficialNestAPI
 {
-    public interface IUnofficialNestAPI
+    public interface IThermostatAccessor
     {
         NestAPICredentialsResponse postLoginRequest(string username, string password);
-
-        NestAPIForecastResponse getForecast(NestAPICredentialsResponse credentials, string zip);
 
         NestAPIStatusResponse getNestStatus(NestAPICredentialsResponse credentials);
 

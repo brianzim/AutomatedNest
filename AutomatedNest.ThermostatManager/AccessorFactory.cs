@@ -12,8 +12,10 @@ namespace AutomatedNest.ThermostatManager
         public virtual T Create<T>()
             where T : class
         {
-            if (typeof(T).Name == "IUnofficialNestAPI")
-                return new AutomatedNest.UnofficialNestAPI.UnofficialNestAPI() as T;
+            if (typeof(T).Name == "IThermostatAccessor")
+                return new AutomatedNest.UnofficialNestAPI.ThermostatAccessor() as T;
+            if (typeof(T).Name == "IForecastAccessor")
+                return new AutomatedNest.UnofficialNestAPI.ForecastAccessor() as T;
 
             return null;
         }

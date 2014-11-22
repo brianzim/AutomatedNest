@@ -82,7 +82,7 @@ namespace AutomatedNest
 
         private void OptimizeAction()
         {
-            ThermostatManager.ThermostatManager thermostatManager = new ThermostatManager.ThermostatManager();
+            ThermostatManager.HumidityManager thermostatManager = new ThermostatManager.HumidityManager();
 
             credentials = thermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
 

@@ -57,8 +57,9 @@
   <ItemGroup>
     <Compile Include="EngineTests.cs" />
     <Compile Include="Mocks\MockAccessorFactory.cs" />
-    <Compile Include="Mocks\MockUnofficialNestAPINoHumidifier.cs" />
-    <Compile Include="Mocks\MockUnofficialNestAPI.cs" />
+    <Compile Include="Mocks\MockForecastAccessor.cs" />
+    <Compile Include="Mocks\MockThermostatAccessorNoHumidifier.cs" />
+    <Compile Include="Mocks\MockThermostatAccessor.cs" />
     <Compile Include="IntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
