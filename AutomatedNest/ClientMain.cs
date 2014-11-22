@@ -63,7 +63,7 @@ namespace AutomatedNest
             else if (FormWindowState.Normal == this.WindowState)
             {
                 notifyIcon1.Visible = true;
-                this.Hide();
+                this.Show();
             }
         }
 
@@ -71,6 +71,7 @@ namespace AutomatedNest
         {
             this.Show();
             this.WindowState = FormWindowState.Normal;
+            this.Activate();
         }
 
         private void MainTimer_Tick(object sender, EventArgs e)
