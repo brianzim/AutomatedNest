@@ -7,10 +7,11 @@
     <ProjectGuid>{8A8005D9-24E3-4907-BDD9-66836ABC7EE4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NestDataObjects</RootNamespace>
-    <AssemblyName>NestDataObjects</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>AutomatedNest.NestDataObjects</RootNamespace>
+    <AssemblyName>AutomatedNest.NestDataObjects</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,9 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NestCredentials.cs" />
-    <Compile Include="NestForecast.cs" />
-    <Compile Include="NestStatus.cs" />
+    <Compile Include="HumidityModes.cs" />
+    <Compile Include="NestAPISetTargetHumidityResponse.cs" />
+    <Compile Include="NestAPICredentialsResponse.cs" />
+    <Compile Include="NestAPIForecastResponse.cs" />
+    <Compile Include="NestAPIStatusResponse.cs" />
+    <Compile Include="OptimizeHumidityResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

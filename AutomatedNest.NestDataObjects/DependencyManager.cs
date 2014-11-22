@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutomatedNest.ThermostatEngines
+namespace NestDataObjects
 {
-    public class ThermostatEngines
+    class DependencyManager
     {
     }
 }

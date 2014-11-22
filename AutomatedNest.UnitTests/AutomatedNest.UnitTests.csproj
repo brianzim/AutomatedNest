@@ -6,9 +6,9 @@
     <ProjectGuid>{451BF83C-A5E2-46F4-B757-2E7030563284}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConnectivityUnitTests</RootNamespace>
-    <AssemblyName>ConnectivityUnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>AutomatedNest.UnitTests</RootNamespace>
+    <AssemblyName>AutomatedNest.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,6 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -50,8 +55,34 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="EngineTests.cs" />
+    <Compile Include="Mocks\MockAccessorFactory.cs" />
+    <Compile Include="Mocks\MockForecastAccessor.cs" />
+    <Compile Include="Mocks\MockThermostatAccessorNoHumidifier.cs" />
+    <Compile Include="Mocks\MockThermostatAccessor.cs" />
+    <Compile Include="IntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutomatedNest.NestDataObjects\AutomatedNest.NestDataObjects.csproj">
+      <Project>{8a8005d9-24e3-4907-bdd9-66836abc7ee4}</Project>
+      <Name>AutomatedNest.NestDataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutomatedNest.ThermostatEngines\AutomatedNest.ThermostatEngines.csproj">
+      <Project>{6b032fcf-8fa2-4016-a5d9-b3b5e08470ca}</Project>
+      <Name>AutomatedNest.ThermostatEngines</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutomatedNest.ThermostatManager\AutomatedNest.ThermostatManager.csproj">
+      <Project>{f311f784-7d7a-4cf9-8d73-02f0610d18e0}</Project>
+      <Name>AutomatedNest.ThermostatManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutomatedNest.UnofficialNestAPI\AutomatedNest.UnofficialNestAPI.csproj">
+      <Project>{683ab04a-205b-4ffc-9d4f-731273310eb8}</Project>
+      <Name>AutomatedNest.UnofficialNestAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

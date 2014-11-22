@@ -7,10 +7,11 @@
     <ProjectGuid>{F311F784-7D7A-4CF9-8D73-02F0610D18E0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ThermostatManager</RootNamespace>
-    <AssemblyName>ThermostatManager</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>AutomatedNest.ThermostatManager</RootNamespace>
+    <AssemblyName>AutomatedNest.ThermostatManager</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ThermostatManager.cs" />
+    <Compile Include="ManagerBase.cs" />
+    <Compile Include="AccessorFactory.cs" />
+    <Compile Include="HumidityManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
