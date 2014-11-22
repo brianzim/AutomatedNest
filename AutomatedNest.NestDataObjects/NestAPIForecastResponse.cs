@@ -56,40 +56,5 @@ namespace AutomatedNest.NestDataObjects
         {
 
         }
-
-        public int LowestForecastTemp
-        {
-            get
-            {
-                int returnValue = 200;
-
-                double currentTempDecimal;
-                Double.TryParse(now.current_temperature, out currentTempDecimal);
-
-                currentTempDecimal = currentTempDecimal * (9.0 / 5.0) + 32;
-
-                int currentTemp = (int)currentTempDecimal;
-
-                if(currentTemp < returnValue)
-                {
-                    returnValue = currentTemp;
-                }
-
-                // Find lowest value for hourly forecasts
-                foreach(NestHourlyForecast nhf in forecast.hourly)
-                {
-                    if (nhf.temp < returnValue) { returnValue = nhf.temp; }
-                }
-
-                // See if there is lower value for upcoming daily forecasts
-                foreach(NestDailyForecast ndf in forecast.daily)
-                {
-                    if (ndf.low_temperature < returnValue) { returnValue = ndf.low_temperature; }
-                }
-                
-                return returnValue;
-            }
-
-        }
     }
 }

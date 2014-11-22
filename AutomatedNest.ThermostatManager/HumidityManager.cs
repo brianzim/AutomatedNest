@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutomatedNest.NestDataObjects;
 using AutomatedNest.UnofficialNestAPI;
+using AutomatedNest.ThermostatEngines;
 
 namespace AutomatedNest.ThermostatManager
 {
@@ -30,10 +31,10 @@ namespace AutomatedNest.ThermostatManager
                 {
                     // Get forecast for location registered to Nest
                     NestAPIForecastResponse forecast = getForecast(credentials, status.PostalCode);
-                    optimizeHumidityResult.LowForecastTemperature = forecast.LowestForecastTemp;
+                    optimizeHumidityResult.LowForecastTemperature = HumidityEngines.findLowestTemperature(forecast);
 
                     // Calculate desired humidity based on forecast an mode of calculation
-                    optimizeHumidityResult.NewTargetHumidity = calculateTargetHumidity(forecast, mode);
+                    optimizeHumidityResult.NewTargetHumidity = HumidityEngines.calculateOptimalHumidity(optimizeHumidityResult.LowForecastTemperature, mode);
 
                     // Compre new target to current target.  Make change if needed.
                     if (status.TargetHumidity != optimizeHumidityResult.NewTargetHumidity)
@@ -86,11 +87,6 @@ namespace AutomatedNest.ThermostatManager
         {
             var nestapi = AccessorFactory.Create<IForecastAccessor>();
             return nestapi.getForecast(credentials, zip);
-        }
-
-        public int calculateTargetHumidity(NestAPIForecastResponse forecast, HumidityMode mode)
-        {
-            return ThermostatEngines.HumidityEngines.calculateOptimalHumidity(forecast, mode);
         }
     }
 }
