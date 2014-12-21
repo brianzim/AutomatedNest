@@ -46,6 +46,7 @@
             this.HumidityComboBox = new System.Windows.Forms.ComboBox();
             this.lblNexScheduledUpdate = new System.Windows.Forms.Label();
             this.lblSchedueledUpdateTime = new System.Windows.Forms.Label();
+            this.chkSaveCredentials = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // StartManagingButton
@@ -107,7 +108,7 @@
             // 
             // StatusWindow
             // 
-            this.StatusWindow.Location = new System.Drawing.Point(13, 261);
+            this.StatusWindow.Location = new System.Drawing.Point(13, 304);
             this.StatusWindow.Multiline = true;
             this.StatusWindow.Name = "StatusWindow";
             this.StatusWindow.ReadOnly = true;
@@ -118,7 +119,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 237);
+            this.label3.Location = new System.Drawing.Point(10, 279);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(79, 13);
             this.label3.TabIndex = 7;
@@ -195,11 +196,22 @@
             this.lblSchedueledUpdateTime.TabIndex = 14;
             this.lblSchedueledUpdateTime.Text = "(none)";
             // 
+            // chkSaveCredentials
+            // 
+            this.chkSaveCredentials.AutoSize = true;
+            this.chkSaveCredentials.Location = new System.Drawing.Point(188, 216);
+            this.chkSaveCredentials.Name = "chkSaveCredentials";
+            this.chkSaveCredentials.Size = new System.Drawing.Size(172, 17);
+            this.chkSaveCredentials.TabIndex = 15;
+            this.chkSaveCredentials.Text = "Save Credentials and Autostart";
+            this.chkSaveCredentials.UseVisualStyleBackColor = true;
+            // 
             // ClientMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(631, 550);
+            this.ClientSize = new System.Drawing.Size(631, 593);
+            this.Controls.Add(this.chkSaveCredentials);
             this.Controls.Add(this.lblSchedueledUpdateTime);
             this.Controls.Add(this.lblNexScheduledUpdate);
             this.Controls.Add(this.IntervalComboBox);
@@ -241,6 +253,7 @@
         private System.Windows.Forms.ComboBox HumidityComboBox;
         private System.Windows.Forms.Label lblNexScheduledUpdate;
         private System.Windows.Forms.Label lblSchedueledUpdateTime;
+        private System.Windows.Forms.CheckBox chkSaveCredentials;
     }
 }
 

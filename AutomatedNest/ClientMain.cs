@@ -28,7 +28,7 @@ namespace AutomatedNest
         {
             InitializeComponent();
 
-            loadCredentials();
+
 
             HumidityComboBox.DataSource = Enum.GetValues(typeof(HumidityMode))
              .Cast<HumidityMode>()
@@ -41,6 +41,8 @@ namespace AutomatedNest
             HumidityComboBox.SelectedIndex = 1;
 
             IntervalComboBox.SelectedIndex = 1;
+
+            loadSettings();
         }
 
         private void StartManagingButton_Click(object sender, EventArgs e)
@@ -93,7 +95,8 @@ namespace AutomatedNest
 
             if (credentials.success)
             {
-                saveCredentials();
+                saveSettings();
+
                 logStatus("Credentials validated for: " + credentials.email);
                 OptimizeHumidityResult result = thermostatManager.optimizeHumidity(credentials, (HumidityMode)HumidityComboBox.SelectedValue);
                 logStatus(result.OperationStatus);
@@ -132,6 +135,8 @@ namespace AutomatedNest
                 HumidityComboBox.Enabled = false;
                 IntervalComboBox.Enabled = false;
 
+                chkSaveCredentials.Enabled = false;
+
                 int interval;
                 int.TryParse(IntervalComboBox.SelectedItem.ToString(), out interval);
 
@@ -154,6 +159,8 @@ namespace AutomatedNest
                 StartManagingButton.Enabled = true;
                 StopManagingButton.Enabled = false;
 
+                chkSaveCredentials.Enabled = true;
+
                 MainTimer.Stop();
             }
         }
@@ -163,37 +170,46 @@ namespace AutomatedNest
             systemRunning(false);
         }
 
-        private void saveCredentials()
+        private void saveSettings()
         {
-            // Referenced StackOverflow for encryption - http://stackoverflow.com/questions/12657792/how-to-securely-save-username-password-local
-
-            // Data to protect. Convert a string to a byte[] using Encoding.UTF8.GetBytes().
-            byte[] plaintext = Encoding.UTF8.GetBytes(txtPassword.Text.ToString());
-
-            // Generate additional entropy (will be used as the Initialization vector)
-            byte[] entropy = new byte[20];
-            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(entropy);
-            }
-
-            byte[] ciphertext = ProtectedData.Protect(plaintext, entropy,
-                DataProtectionScope.CurrentUser);
-
             Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
             config.AppSettings.Settings.Remove("NestUserName");
-            config.AppSettings.Settings.Add("NestUserName", txtUserName.Text.ToString());
-
             config.AppSettings.Settings.Remove("NestPassword");
-            config.AppSettings.Settings.Add("NestPassword", System.Convert.ToBase64String(ciphertext));
-
             config.AppSettings.Settings.Remove("NestPasswordEntropy");
-            config.AppSettings.Settings.Add("NestPasswordEntropy", System.Convert.ToBase64String(entropy));
+
+            if (chkSaveCredentials.Checked)
+            {
+
+                // Referenced StackOverflow for encryption - http://stackoverflow.com/questions/12657792/how-to-securely-save-username-password-local
+
+                // Data to protect. Convert a string to a byte[] using Encoding.UTF8.GetBytes().
+                byte[] plaintext = Encoding.UTF8.GetBytes(txtPassword.Text.ToString());
+
+                // Generate additional entropy (will be used as the Initialization vector)
+                byte[] entropy = new byte[20];
+                using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+                {
+                    rng.GetBytes(entropy);
+                }
+
+                byte[] ciphertext = ProtectedData.Protect(plaintext, entropy,
+                    DataProtectionScope.CurrentUser);
+
+                config.AppSettings.Settings.Add("NestUserName", txtUserName.Text.ToString());
+                config.AppSettings.Settings.Add("NestPassword", System.Convert.ToBase64String(ciphertext));
+                config.AppSettings.Settings.Add("NestPasswordEntropy", System.Convert.ToBase64String(entropy));
+            }
+            else
+            {
+                config.AppSettings.Settings.Add("NestUserName", "");
+                config.AppSettings.Settings.Add("NestPassword", "");
+                config.AppSettings.Settings.Add("NestPasswordEntropy", "");
+            }
 
             config.Save(ConfigurationSaveMode.Modified);
         }
 
-        private void loadCredentials()
+        private void loadSettings()
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
 
@@ -205,6 +221,10 @@ namespace AutomatedNest
                 byte[] ciphertext = System.Convert.FromBase64String(config.AppSettings.Settings["NestPassword"].Value);
 
                 txtPassword.Text = System.Text.Encoding.Default.GetString(ProtectedData.Unprotect(ciphertext, entropy, DataProtectionScope.CurrentUser));
+
+                chkSaveCredentials.Checked = true;
+
+                systemRunning(true);
             }
         }
  
