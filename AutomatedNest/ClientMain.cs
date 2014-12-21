@@ -22,11 +22,11 @@ namespace AutomatedNest
 {
     public partial class ClientMain : Form
     {
-        NestAPICredentialsResponse credentials;
-
         public ClientMain()
         {
             InitializeComponent();
+
+            // Set GUI Defaults
 
             HumidityComboBox.DataSource = Enum.GetValues(typeof(HumidityMode))
              .Cast<HumidityMode>()
@@ -39,8 +39,17 @@ namespace AutomatedNest
             HumidityComboBox.SelectedIndex = 1;
             IntervalComboBox.SelectedIndex = 1;
 
+            // Override defaults if settings are saved
             loadSettings();
+
+            // If there were saved settings, put applicaiton into running state
+            if(chkSaveCredentials.Checked)
+            {
+                SystemRunningState(true);
+            }       
         }
+
+        #region Button Handlers
 
         private void StartManagingButton_Click(object sender, EventArgs e)
         {
@@ -50,7 +59,7 @@ namespace AutomatedNest
             }
             else
             {
-                systemRunning(true);
+                SystemRunningState(true);
 
             }
         }
@@ -77,18 +86,70 @@ namespace AutomatedNest
             this.Activate();
         }
 
+        private void StopManagingButton_Click(object sender, EventArgs e)
+        {
+            SystemRunningState(false);
+        }
+
+        #endregion 
+
+        #region System State Control & Methods
         private void MainTimer_Tick(object sender, EventArgs e)
         {
             UpdateScheduledUpdateTime();
             OptimizeAction();
-            
+        }
+
+        private void SystemRunningState(bool mode)
+        {
+            if (mode)
+            {
+                logStatus("Humidity management has started.");
+
+                // Disable GUI setting fields
+                txtUserName.ReadOnly = true;
+                txtPassword.ReadOnly = true;
+                StartManagingButton.Enabled = false;
+                StopManagingButton.Enabled = true;
+                HumidityComboBox.Enabled = false;
+                IntervalComboBox.Enabled = false;
+                chkSaveCredentials.Enabled = false;
+
+                int interval;
+                int.TryParse(IntervalComboBox.SelectedItem.ToString(), out interval);
+
+                MainTimer.Interval = 1000 * 60 * 60 * interval;
+                MainTimer.Start();
+
+                // Set Field in GUI to show next running time
+                UpdateScheduledUpdateTime();
+
+                // Run Optimization Action for first time.  Subsequent times will be run by timer.
+                OptimizeAction();
+            }
+            else
+            {
+                logStatus("Humidity management has stopped.");
+
+                // Enable GUI setting fields
+                txtUserName.ReadOnly = false;
+                txtPassword.ReadOnly = false;
+                HumidityComboBox.Enabled = true;
+                IntervalComboBox.Enabled = true;
+                StartManagingButton.Enabled = true;
+                StopManagingButton.Enabled = false;
+                chkSaveCredentials.Enabled = true;
+
+                // Stop Timer
+                MainTimer.Stop();
+            }
         }
 
         private void OptimizeAction()
         {
             ThermostatManager.HumidityManager thermostatManager = new ThermostatManager.HumidityManager();
 
-            credentials = thermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
+            NestAPICredentialsResponse credentials = thermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
 
             if (credentials.success)
             {
@@ -102,7 +163,7 @@ namespace AutomatedNest
             {
                 logStatus(credentials.error);
             }
-            
+
         }
 
         private void UpdateScheduledUpdateTime()
@@ -118,54 +179,9 @@ namespace AutomatedNest
             StatusWindow.Select(0, 0);
         }
 
-        private void systemRunning(bool mode)
-        {
-            if (mode)
-            {
-                logStatus("Humidity management has started.");
+        #endregion
 
-                txtUserName.ReadOnly = true;
-                txtPassword.ReadOnly = true;
-                StartManagingButton.Enabled = false;
-                StopManagingButton.Enabled = true;
-
-                HumidityComboBox.Enabled = false;
-                IntervalComboBox.Enabled = false;
-
-                chkSaveCredentials.Enabled = false;
-
-                int interval;
-                int.TryParse(IntervalComboBox.SelectedItem.ToString(), out interval);
-
-                MainTimer.Interval = 1000 * 60 * 60 * interval;
-                MainTimer.Start();
-
-                UpdateScheduledUpdateTime();
-                OptimizeAction();
-            }
-            else
-            {
-                logStatus("Humidity management has stopped.");
-
-                txtUserName.ReadOnly = false;
-                txtPassword.ReadOnly = false;
-
-                HumidityComboBox.Enabled = true;
-                IntervalComboBox.Enabled = true;
-
-                StartManagingButton.Enabled = true;
-                StopManagingButton.Enabled = false;
-
-                chkSaveCredentials.Enabled = true;
-
-                MainTimer.Stop();
-            }
-        }
-
-        private void StopManagingButton_Click(object sender, EventArgs e)
-        {
-            systemRunning(false);
-        }
+        #region Applicaiton Settings Management
 
         private void saveSettings()
         {
@@ -186,13 +202,13 @@ namespace AutomatedNest
 
                 // Generate additional entropy (will be used as the Initialization vector)
                 byte[] entropy = new byte[20];
+
                 using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
                 {
                     rng.GetBytes(entropy);
                 }
 
-                byte[] ciphertext = ProtectedData.Protect(plaintext, entropy,
-                    DataProtectionScope.CurrentUser);
+                byte[] ciphertext = ProtectedData.Protect(plaintext, entropy, DataProtectionScope.CurrentUser);
 
                 config.AppSettings.Settings.Add("NestUserName", txtUserName.Text.ToString());
                 config.AppSettings.Settings.Add("NestPassword", System.Convert.ToBase64String(ciphertext));
@@ -229,10 +245,9 @@ namespace AutomatedNest
                 IntervalComboBox.SelectedIndex = System.Convert.ToInt32(config.AppSettings.Settings["IntervalComboBox"].Value);
 
                 chkSaveCredentials.Checked = true;
-
-                systemRunning(true);
             }
         }
- 
+
+        #endregion
     }
 }
