@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
+using System.Configuration;
+using System.Security.Cryptography;
 using AutomatedNest.ThermostatManager;
 using AutomatedNest.NestDataObjects;
 using AutomatedNest.ThermostatEngines;
@@ -20,11 +22,11 @@ namespace AutomatedNest
 {
     public partial class ClientMain : Form
     {
-        NestAPICredentialsResponse credentials;
-
         public ClientMain()
         {
             InitializeComponent();
+
+            // Set GUI Defaults
 
             HumidityComboBox.DataSource = Enum.GetValues(typeof(HumidityMode))
              .Cast<HumidityMode>()
@@ -35,9 +37,19 @@ namespace AutomatedNest
             HumidityComboBox.ValueMember = "Key";
 
             HumidityComboBox.SelectedIndex = 1;
-
             IntervalComboBox.SelectedIndex = 1;
+
+            // Override defaults if settings are saved
+            loadSettings();
+
+            // If there were saved settings, put applicaiton into running state
+            if(chkSaveCredentials.Checked)
+            {
+                SystemRunningState(true);
+            }       
         }
+
+        #region Button Handlers
 
         private void StartManagingButton_Click(object sender, EventArgs e)
         {
@@ -47,7 +59,7 @@ namespace AutomatedNest
             }
             else
             {
-                systemRunning(true);
+                SystemRunningState(true);
 
             }
         }
@@ -63,7 +75,7 @@ namespace AutomatedNest
             else if (FormWindowState.Normal == this.WindowState)
             {
                 notifyIcon1.Visible = true;
-                this.Hide();
+                this.Show();
             }
         }
 
@@ -71,23 +83,78 @@ namespace AutomatedNest
         {
             this.Show();
             this.WindowState = FormWindowState.Normal;
+            this.Activate();
         }
 
+        private void StopManagingButton_Click(object sender, EventArgs e)
+        {
+            SystemRunningState(false);
+        }
+
+        #endregion 
+
+        #region System State Control & Methods
         private void MainTimer_Tick(object sender, EventArgs e)
         {
             UpdateScheduledUpdateTime();
             OptimizeAction();
-            
+        }
+
+        private void SystemRunningState(bool mode)
+        {
+            if (mode)
+            {
+                logStatus("Humidity management has started.");
+
+                // Disable GUI setting fields
+                txtUserName.ReadOnly = true;
+                txtPassword.ReadOnly = true;
+                StartManagingButton.Enabled = false;
+                StopManagingButton.Enabled = true;
+                HumidityComboBox.Enabled = false;
+                IntervalComboBox.Enabled = false;
+                chkSaveCredentials.Enabled = false;
+
+                int interval;
+                int.TryParse(IntervalComboBox.SelectedItem.ToString(), out interval);
+
+                MainTimer.Interval = 1000 * 60 * 60 * interval;
+                MainTimer.Start();
+
+                // Set Field in GUI to show next running time
+                UpdateScheduledUpdateTime();
+
+                // Run Optimization Action for first time.  Subsequent times will be run by timer.
+                OptimizeAction();
+            }
+            else
+            {
+                logStatus("Humidity management has stopped.");
+
+                // Enable GUI setting fields
+                txtUserName.ReadOnly = false;
+                txtPassword.ReadOnly = false;
+                HumidityComboBox.Enabled = true;
+                IntervalComboBox.Enabled = true;
+                StartManagingButton.Enabled = true;
+                StopManagingButton.Enabled = false;
+                chkSaveCredentials.Enabled = true;
+
+                // Stop Timer
+                MainTimer.Stop();
+            }
         }
 
         private void OptimizeAction()
         {
             ThermostatManager.HumidityManager thermostatManager = new ThermostatManager.HumidityManager();
 
-            credentials = thermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
+            NestAPICredentialsResponse credentials = thermostatManager.performLogin(txtUserName.Text.ToString(), txtPassword.Text.ToString());
 
             if (credentials.success)
             {
+                saveSettings();
+
                 logStatus("Credentials validated for: " + credentials.email);
                 OptimizeHumidityResult result = thermostatManager.optimizeHumidity(credentials, (HumidityMode)HumidityComboBox.SelectedValue);
                 logStatus(result.OperationStatus);
@@ -96,7 +163,7 @@ namespace AutomatedNest
             {
                 logStatus(credentials.error);
             }
-            
+
         }
 
         private void UpdateScheduledUpdateTime()
@@ -112,50 +179,75 @@ namespace AutomatedNest
             StatusWindow.Select(0, 0);
         }
 
-        private void systemRunning(bool mode)
+        #endregion
+
+        #region Applicaiton Settings Management
+
+        private void saveSettings()
         {
-            if (mode)
+            Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+            config.AppSettings.Settings.Remove("NestUserName");
+            config.AppSettings.Settings.Remove("NestPassword");
+            config.AppSettings.Settings.Remove("NestPasswordEntropy");
+            config.AppSettings.Settings.Remove("HumidityComboBox");
+            config.AppSettings.Settings.Remove("IntervalComboBox");
+
+            if (chkSaveCredentials.Checked)
             {
-                logStatus("Humidity management has started.");
 
-                txtUserName.ReadOnly = true;
-                txtPassword.ReadOnly = true;
-                StartManagingButton.Enabled = false;
-                StopManagingButton.Enabled = true;
+                // Referenced StackOverflow for encryption - http://stackoverflow.com/questions/12657792/how-to-securely-save-username-password-local
 
-                HumidityComboBox.Enabled = false;
-                IntervalComboBox.Enabled = false;
+                // Data to protect. Convert a string to a byte[] using Encoding.UTF8.GetBytes().
+                byte[] plaintext = Encoding.UTF8.GetBytes(txtPassword.Text.ToString());
 
-                int interval;
-                int.TryParse(IntervalComboBox.SelectedItem.ToString(), out interval);
+                // Generate additional entropy (will be used as the Initialization vector)
+                byte[] entropy = new byte[20];
 
-                MainTimer.Interval = 1000 * 60 * 60 * interval;
-                MainTimer.Start();
+                using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+                {
+                    rng.GetBytes(entropy);
+                }
 
-                UpdateScheduledUpdateTime();
-                OptimizeAction();
+                byte[] ciphertext = ProtectedData.Protect(plaintext, entropy, DataProtectionScope.CurrentUser);
+
+                config.AppSettings.Settings.Add("NestUserName", txtUserName.Text.ToString());
+                config.AppSettings.Settings.Add("NestPassword", System.Convert.ToBase64String(ciphertext));
+                config.AppSettings.Settings.Add("NestPasswordEntropy", System.Convert.ToBase64String(entropy));
+                config.AppSettings.Settings.Add("HumidityComboBox", HumidityComboBox.SelectedIndex.ToString());
+                config.AppSettings.Settings.Add("IntervalComboBox", IntervalComboBox.SelectedIndex.ToString());
             }
             else
             {
-                logStatus("Humidity management has stopped.");
+                config.AppSettings.Settings.Add("NestUserName", "");
+                config.AppSettings.Settings.Add("NestPassword", "");
+                config.AppSettings.Settings.Add("NestPasswordEntropy", "");
+                config.AppSettings.Settings.Add("HumidityComboBox", "");
+                config.AppSettings.Settings.Add("IntervalComboBox", "");
+            }
 
-                txtUserName.ReadOnly = false;
-                txtPassword.ReadOnly = false;
+            config.Save(ConfigurationSaveMode.Modified);
+        }
 
-                HumidityComboBox.Enabled = true;
-                IntervalComboBox.Enabled = true;
+        private void loadSettings()
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
 
-                StartManagingButton.Enabled = true;
-                StopManagingButton.Enabled = false;
+            if (config.AppSettings.Settings["NestUserName"].Value != "")
+            {
+                txtUserName.Text = config.AppSettings.Settings["NestUserName"].Value;
 
-                MainTimer.Stop();
+                byte[] entropy = System.Convert.FromBase64String(config.AppSettings.Settings["NestPasswordEntropy"].Value);
+                byte[] ciphertext = System.Convert.FromBase64String(config.AppSettings.Settings["NestPassword"].Value);
+
+                txtPassword.Text = System.Text.Encoding.Default.GetString(ProtectedData.Unprotect(ciphertext, entropy, DataProtectionScope.CurrentUser));
+
+                HumidityComboBox.SelectedIndex = System.Convert.ToInt32(config.AppSettings.Settings["HumidityComboBox"].Value);
+                IntervalComboBox.SelectedIndex = System.Convert.ToInt32(config.AppSettings.Settings["IntervalComboBox"].Value);
+
+                chkSaveCredentials.Checked = true;
             }
         }
 
-        private void StopManagingButton_Click(object sender, EventArgs e)
-        {
-            systemRunning(false);
-        }
- 
+        #endregion
     }
 }

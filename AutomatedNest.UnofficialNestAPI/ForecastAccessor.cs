@@ -14,7 +14,6 @@ namespace AutomatedNest.UnofficialNestAPI
     public class ForecastAccessor : IForecastAccessor
     {
         private static string forecastURL = "https://home.nest.com/api/0.1/weather/forecast/";
-        private static string deviceURL = "/v2/put/device";
         private static string userAgent = "'Nest/2.1.3 CFNetwork/548.0.4'";
         private static string protocol_version = "1";
 

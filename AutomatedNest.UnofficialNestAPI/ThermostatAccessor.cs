@@ -166,8 +166,6 @@ namespace AutomatedNest.UnofficialNestAPI
             return returnResponse;
         }
 
-        public string getAPI(string url) { return null;  }
-
         private string WriteEncodedFormParameter(string key, string value)
         {
             return WriteEncodedFormParameter(key, value, false);
