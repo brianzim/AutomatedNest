@@ -28,8 +28,6 @@ namespace AutomatedNest
         {
             InitializeComponent();
 
-
-
             HumidityComboBox.DataSource = Enum.GetValues(typeof(HumidityMode))
              .Cast<HumidityMode>()
              .Select(p => new { Key = (int)p, Value = p.ToString() })
@@ -39,7 +37,6 @@ namespace AutomatedNest
             HumidityComboBox.ValueMember = "Key";
 
             HumidityComboBox.SelectedIndex = 1;
-
             IntervalComboBox.SelectedIndex = 1;
 
             loadSettings();
@@ -176,6 +173,8 @@ namespace AutomatedNest
             config.AppSettings.Settings.Remove("NestUserName");
             config.AppSettings.Settings.Remove("NestPassword");
             config.AppSettings.Settings.Remove("NestPasswordEntropy");
+            config.AppSettings.Settings.Remove("HumidityComboBox");
+            config.AppSettings.Settings.Remove("IntervalComboBox");
 
             if (chkSaveCredentials.Checked)
             {
@@ -198,12 +197,16 @@ namespace AutomatedNest
                 config.AppSettings.Settings.Add("NestUserName", txtUserName.Text.ToString());
                 config.AppSettings.Settings.Add("NestPassword", System.Convert.ToBase64String(ciphertext));
                 config.AppSettings.Settings.Add("NestPasswordEntropy", System.Convert.ToBase64String(entropy));
+                config.AppSettings.Settings.Add("HumidityComboBox", HumidityComboBox.SelectedIndex.ToString());
+                config.AppSettings.Settings.Add("IntervalComboBox", IntervalComboBox.SelectedIndex.ToString());
             }
             else
             {
                 config.AppSettings.Settings.Add("NestUserName", "");
                 config.AppSettings.Settings.Add("NestPassword", "");
                 config.AppSettings.Settings.Add("NestPasswordEntropy", "");
+                config.AppSettings.Settings.Add("HumidityComboBox", "");
+                config.AppSettings.Settings.Add("IntervalComboBox", "");
             }
 
             config.Save(ConfigurationSaveMode.Modified);
@@ -221,6 +224,9 @@ namespace AutomatedNest
                 byte[] ciphertext = System.Convert.FromBase64String(config.AppSettings.Settings["NestPassword"].Value);
 
                 txtPassword.Text = System.Text.Encoding.Default.GetString(ProtectedData.Unprotect(ciphertext, entropy, DataProtectionScope.CurrentUser));
+
+                HumidityComboBox.SelectedIndex = System.Convert.ToInt32(config.AppSettings.Settings["HumidityComboBox"].Value);
+                IntervalComboBox.SelectedIndex = System.Convert.ToInt32(config.AppSettings.Settings["IntervalComboBox"].Value);
 
                 chkSaveCredentials.Checked = true;
 
